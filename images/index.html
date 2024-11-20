@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUMAQ ALLPA</title>
+    <link rel="shortcut icon" href="images/icon_index.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css"/>
+</head>
+
+
+<body class="cuerpo">
+
+   
+    <header class="header">
+        <div class="header-content container">
+            <h1 class="animated-title">S U M A Q  A L L P A</h1><br>
+            <h2 class="traduccion"><br><br> "Tierra Hermosa"</h2> 
+            <br> 
+        </div>
+        <div class="uncp">
+            <img src="/images/icon.png" alt="">
+        </div>
+        
+        
+
+        <div id="sidebar" class="sidebar">
+            <button class="closebtn" onclick="closeNav()"><b>✖</b></button>
+            <a href="index.html">Inicio</a>
+            <a href="Prácticas_Ecológicas.html">Prácticas Ecológicas</a>
+            <a href="Biohuertos.html">Biohuertos</a>
+            <a href="SobreNosotros.html">Sobre Nosotros</a>
+            <a href="https://www.stack-ai.com/chat-assistant/b3793d77-7344-4476-9d59-ddd0acd5a0e7/42dda566-b42d-4e9f-907a-ce93c206fe1d/670cc64b8cd92a3b3abb6b15">Chatbot</a>
+        </div>
+        <div id="main">
+            <button class="openbtn" onclick="openNav()">☰</button>
+        </div>
+        
+        <div class="menu container">
+            <nav class="navbar">
+                <ul>    
+                    <li><a href="#novedades">Novedades</a></li>
+                    <li><a href="#sabias">Sabías qué</a></li>
+                    <li><a href="#juegos">Repositorio</a></li>
+                    <li><a href="#sobreNosotros">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        
+    
+        
+    </header>
+
+    <div id="chat-widget">
+        <div id="chat-button-container">
+            <button id="chat-button" aria-label="Abrir chat">
+                <img src="/images/capfeo.jpg" alt="Mascota del chat">
+            </button>
+            <div id="chat-bubble">Hola! soy kapiwara, chatea conmigo</div>
+        </div>
+        <div id="chat-window">
+            <div id="chat-header">
+                <div id="chat-header-left">
+                    <img id="chat-header-avatar" src="/images/capfeo.jpg" alt="Avatar del chat">
+                    <span>Tu Kapiwara</span>
+                </div>
+                <button id="close-chat" aria-label="Cerrar chat">✖</button>
+            </div>
+            <div id="chat-messages"></div>
+            <div id="chat-input">
+                <input type="text" id="inputText" placeholder="Escribe tu mensaje...">
+                <button id="generateButton">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+    </script>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        // Reemplaza 'YOUR_API_KEY' con tu clave de API real
+        const API_KEY = 'AIzaSyCLq5BHxfCA1mPWBO4MEa_hUMg122jY7BU';
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        let conversationHistory = 'System: Te llamas Carloncho, ofreces un dato curioso sobre las practicas ecológicas ya que eres aficionado a eso'; 
+        const chatButton = document.getElementById('chat-button');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChat = document.getElementById('close-chat');
+        const chatMessages = document.getElementById('chat-messages');
+        const inputText = document.getElementById('inputText');
+        const generateButton = document.getElementById('generateButton');
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatButtonContainer = document.getElementById('chat-button-container');  // Oe no me lo este malogrando a mi carlonch, malandrin
+
+
+
+        chatButton.addEventListener('click', () => {
+            chatWindow.style.display = 'block';
+            chatButtonContainer.style.display = 'none';
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatWindow.style.display = 'none';
+            chatButtonContainer.style.display = 'block';
+            chatBubble.style.display = 'none';
+        });
+
+        function addMessage(text, isUser) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+
+            if (!isUser) {
+                const avatarElement = document.createElement('img');
+                avatarElement.classList.add('message-avatar');
+                avatarElement.src = '/images/cap.png';
+                avatarElement.alt = 'Avatar del bot';
+                messageElement.appendChild(avatarElement);
+            }
+
+            const contentElement = document.createElement('div');
+            contentElement.classList.add('message-content');
+            contentElement.textContent = text;
+
+            messageElement.appendChild(contentElement);
+
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        generateButton.addEventListener('click', async () => {
+            const userInput = inputText.value.trim();
+            if (userInput) {
+                addMessage(userInput, true);
+                inputText.value = '';
+
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest"});
+                const prompt = userInput;
+
+                try {
+                    addMessage('Escribiendo...', false);
+                    const result = await model.generateContent(prompt);
+                    const response = await result.response;
+                    chatMessages.removeChild(chatMessages.lastChild);
+                    addMessage(response.text(), false);
+                } catch (error) {
+                    console.error('Error al generar contenido:', error);
+                    chatMessages.removeChild(chatMessages.lastChild);
+                    addMessage('Lo siento, ha ocurrido un error. Por favor, intenta de nuevo.', false);
+                }
+            }
+        });
+
+        inputText.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                generateButton.click();
+            }
+        });
+
+        // Mostrar el globo de texto después de 3 segundos
+        setTimeout(() => {
+            chatBubble.style.display = 'block';
+        }, 3000);
+
+        // Ocultar el globo de texto después de 10 segundos
+        setTimeout(() => {
+            chatBubble.style.display = 'none';
+        }, 13000);
+    </script>
+
+    <section id="novedades">
+        <div class="UltimasNoticias">
+            <h2>ULTIMAS NOTICIAS</h2>
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">El transporte en China avanza imparable hacia un futuro eléctrico</h3>
+                                <span class="card-date">19 de noviembre, 2024</span>
+                            </div>
+                            <div class="card-content">
+                                <img src="/images/noticia1.jpg" alt="">
+                                <p>Pekín aprovecha la cumbre del clima para defender un debate sobre las restricciones comerciales que afectan a sus exportaciones de vehículos eléctricos. (Fuente: El País)</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="https://elpais.com/clima-y-medio-ambiente/2024-11-20/el-transporte-en-china-avanza-imparable-hacia-un-futuro-electrico.html" class="btn">Leer más</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">El G-20 se reafirma en la lucha climática e insta a que se alcance un acuerdo de financiación en la cumbre de Bakú</h3>
+                                <span class="card-date">19 de noviembre, 2024</span>
+                            </div>
+                            <div class="card-content">
+                                <img src="/images/noticia2.jpg" alt="">
+                                <p>Las economías más poderosas del mundo defienden la batalla contra el calentamiento global ante el avance de los dirigentes negacionistas, aunque evitan las referencias a dejar atrás los combustibles fósiles. (Fuente: El País)</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="https://elpais.com/clima-y-medio-ambiente/2024-11-19/el-g-20-se-reafirma-en-la-lucha-climatica-e-insta-a-que-se-alcance-un-acuerdo-de-financiacion-en-la-cumbre-de-baku.html" class="btn">Leer más</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">La COP29 y la urgencia de acordar nuevas metas de financiación climática</h3>
+                                <span class="card-date">18 de noviembre, 2024</span>
+                            </div>
+                            <div class="card-content"> 
+                                <img src="/images/noticia3.jpg" alt="">
+                                <p>Aunque en las COP se ha llegado a acuerdos multilaterales importantes, como el de París, los países muestran poco compromiso en cumplirlos, poniendo en duda la efectividad del sistema. (Fuente: El tiempo)</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="https://www.eltiempo.com/vida/medio-ambiente/la-cop29-y-la-urgencia-de-acordar-nuevas-metas-de-financiacion-climatica-3400499" class="btn">Leer más</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Alerta por ciclón tropical Sara en el Caribe Colombiano: vea las advertencias, recomendaciones y cómo proteger su hogar</h3>
+                                <span class="card-date">14 de noviembre, 2024</span>
+                            </div>
+                            <div class="card-content">
+                                <img src="/images/noticia4.jpg" alt="">
+                                <p>Alerta por ciclón tropical Sara en el Caribe Colombiano: vea las advertencias, recomendaciones y cómo proteger su hogar (Fuente: El tiempo)</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="https://www.eltiempo.com/vida/medio-ambiente/alerta-por-ciclon-tropical-sara-en-el-caribe-colombiano-vea-las-advertencias-recomendaciones-y-como-proteger-su-hogar-3399617" class="btn">Leer más</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">La restauración representa el 20 % de la solución para la mitigación de emisiones: ministra Susana Muhamad, en el inicio de la COP29</h3>
+                                <span class="card-date">13 de noviembre, 2024</span>
+                            </div>
+                            <div class="card-content">
+                                <img src="/images/noticia5.jpg" alt="">
+                                <p>Muhamad subrayó la necesidad de integrar las agendas de biodiversidad y cambio climático. (Fuente: El tiempo)</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="https://www.eltiempo.com/vida/medio-ambiente/la-restauracion-representa-el-20-de-la-solucion-para-la-mitigacion-de-emisiones-ministra-susana-muhamad-en-el-inicio-de-la-cop29-3399469" class="btn">Leer más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="carousel-control prev" aria-label="Noticia anterior">&lt;</a>
+                <a href="#" class="carousel-control next" aria-label="Noticia siguiente">&gt;</a>
+                <div class="carousel-indicators"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="sabias">
+        <div class="card-group">
+            <div class="titulo-noticias">
+                <h2 class="titulin">SABÍAS QUÉ</h2>
+            </div>
+            <div class="cardi">
+                <img src="images/sabias1.jpg" alt="#">
+                <div class="layer"></div>
+                <div class="info">
+                    <h1>CHOCOLATES...</h1>
+                    <p>
+                        El chocolate podría subir cada vez más de precio debido al cambio climático, que dificulta el cultivo de esta planta. Esto significaría que algo tan habitual como una chocolatina podría llegar a ser un bien de lujo tan exquisito como el caviar.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="juegos">
+        <div class="juegos-texto">
+            <h2>  REPOSITORIO DIGITAL MINAM </h2>
+            <p>
+                ¡Descubre el repositorio que lo tiene todo!🌿🌍
+            </p>
+            <p> ¿Buscas recursos confiables sobre sostenibilidad, medio ambiente o desarrollo urbano?
+                Este repositorio es tu aliado perfecto. Encuentra guías, artículos, estudios, y
+                herramientas que te ayudarán a impulsar proyectos sostenibles, 
+                ¡todo en un solo lugar!
+            </p>
+            
+            <a href="https://repositoriodigital.minam.gob.pe/" class="gameover"><strong>   HAZ CLICK AQUÍ   </strong></a>
+        </div>    
+    </section>
+    
+    <section id="sobreNosotros" class="sobreNosotros">
+        <div class="ContenidoNosotros">
+            <div class="content-wrapper">
+                <div class="content">
+                    <h1>Quiénes Somos</h1>
+                    <p>  Somos un equipo interesado en fomentar el cuidado del medio ambiente en zonas urbanas
+                         y promover un futuro sostenible. Nuestra misión es transformar los entornos urbanos 
+                         en espacios más verdes, saludables y sostenibles, donde las personas puedan convivir
+                         en armonía con la naturaleza. Creemos que, con acciones concretas y cambios en el diseño 
+                         de nuestras ciudades, es posible reducir el impacto ambiental y mejorar la calidad de 
+                         vida de sus habitantes.
+                    </p>
+                    <a href="sobreNosotros.html" class="cta-button">Descubre más sobre nosotros</a>
+                </div>
+                <img src="images/quienesSomos.jpg" alt="Equipo de EcoAventura en acción" class="side-image">
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <button id="volverArriba" aria-label="Volver arriba">↑</button>
+
+    <footer class="footer">
+        <div class="footer-contenido"></div>
+            <div class="link">
+                <h3>CONTÁCTANOS   ☏</h3>
+                <ul>
+                    <li><a href="#">Jelibeth Ramirez Vilchez</a></li>
+                    <li><a href="#">Ximena Chihuan Cardenas</a></li>
+                    <li><a href="#">Ruben Sinche Rojas</a></li>
+                    <li><a href="#">Andersen Aguilar Enriquez</a></li>
+                    <li><a href="#">Karol Balbin Puñez</a></li>
+                    <li><a href="#">Hilari Zerpa Salazar</a></li>
+                    <li><a href="#">Michael Chancan Alania</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="social-media">
+            <p>&copy; 2024 sumaqallpa@gmail.com Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+<script src="script.js"></script>
+</html>

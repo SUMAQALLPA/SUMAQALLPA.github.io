@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Kalam', cursive;
+    width: 100%;
+    height: 100%;
+    --s: 200px;
+    --c1: #1b2213;
+    --c2: #32503c;
+    --c3: #2a452a;
+  
+    background: repeating-conic-gradient(
+          from 30deg,
+          #0000 0 120deg,
+          var(--c3) 0 180deg
+        )
+        calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577),
+      repeating-conic-gradient(
+        from 30deg,
+        var(--c1) 0 60deg,
+        var(--c2) 0 120deg,
+        var(--c3) 0 180deg
+      );
+    background-size: var(--s) calc(var(--s) * 0.577);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to right, #1a4314, #308b51);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: absolute;
+    top: 0; 
+    left: 0;
+}
+
+header h1 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+#content {
+    width: 100%;
+}
+
+/*sidebar*/ 
+
+.sidebar {
+    position: fixed;
+    height: 100%;
+    width: 0;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #5b8a4e;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 10px;
+   
+}
+
+.sidebar.open {
+    width: 250px; /* Ancho cuando está abierto */
+}
+
+
+.closebtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    padding: 10px 10px;
+    border-radius: 9px;
+    border: 0;
+    margin-left: 70%;
+    margin-top: 5px;
+    color: rgb(186, 212, 171);
+    text-shadow: 1px 1px 2px black;
+
+}
+
+.openbtn {
+    margin: 4px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #5b8a4e;
+    color: rgba(255, 255, 255, 0.964);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 9px;
+    visibility: visible;
+    position:fixed; /* Asegura que el botón siempre sea visible */
+    left: 0px;
+    top: 0px;
+    z-index: 2;
+    transition: 0.5s;
+}
+  /* Movemos el botón cuando el sidebar está abierto */
+
+  .openbtn.moved {
+    left: 270px;
+}
+/*Texto del menu*/
+.sidebar a {
+    padding: 8px 8px 8px 15px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.2s;
+    white-space: nowrap;
+
+}
+
+.sidebar a:hover {
+    font-size: 0.7cm;
+    font-weight: bold;
+    color: rgb(76, 120, 76);
+    background-color: #f1f1f1;
+    margin: 0px 15px 15px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.openbtn:hover {
+    background-color: #5b8a4e;
+}
+#main {
+    transition: margin-left .5s;
+    margin-left: 0;
+}
+
+
+.cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 2vw;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25vw;
+    height: 40vh;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.cards:hover > .card:not(:hover) {
+    filter: blur(5px);
+    transform: scale(0.95);
+}
+
+.card .tip {
+    font-size: 2em;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card .second-text {
+    font-size: 1.2em;
+    margin: 10px 0 0 0;
+}
+
+.card.red { 
+    background: url(/images/rat.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #f43f5e; 
+}
+.card.blue {
+    background: url(/images/rat.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #3b82f6; 
+}
+.card.green {
+    background: url(/images/rat.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #22c55e;
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.loader.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* New Tree Animation Styles */
+.tree {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(30deg);
+    animation: treeAnimate 5s linear infinite;
+}
+
+@keyframes treeAnimate {
+    0% {
+        transform: rotateX(-20deg) rotateY(360deg);
+    }
+    100% {
+        transform: rotateX(-20deg) rotateY(0deg);
+    }
+}
+
+.tree div {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform: translateY(calc(25px * var(--x))) translateZ(0px);
+}
+
+.tree div.branch span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #69c069, #77dd77);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    border-bottom: 5px solid #00000019;
+    transform-origin: bottom;
+    transform: rotateY(calc(90deg * var(--i))) rotateX(30deg) translateZ(28.5px);
+}
+
+.tree div.stem span {
+    position: absolute;
+    top: 110px;
+    left: calc(50% - 7.5px);
+    width: 15px;
+    height: 50%;
+    background: linear-gradient(90deg, #bb4622, #df7214);
+    border-bottom: 5px solid #00000019;
+    transform-origin: bottom;
+    transform: rotateY(calc(90deg * var(--i))) translateZ(7.5px);
+}
+
+.shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    filter: blur(20px);
+    transform-style: preserve-3d;
+    transform: rotateX(90deg) translateZ(-65px);
+}
+
+@media (max-width: 768px) {
+    .cards {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+    }
+
+    .card {
+        width: 80vw;
+        height: 25vh;
+        margin-bottom: 20px;
+    }
+
+    .card .tip {
+        font-size: 1.5em;
+    }
+
+    .card .second-text {
+        font-size: 1em;
+    }
+}
