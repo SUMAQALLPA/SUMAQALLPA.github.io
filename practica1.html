@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residuos Sólidos - Gestión Sostenible</title>
+    <link rel="shortcut icon" href="images/resid_ico.png" type="image/x-icon">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --sage-light: #e8f5e9;
+            --sage-medium: #a8c5d3;
+            --sage-dark: #4a665f;
+            --brown-accent: #8b6b4d;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: var(--sage-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .decorative-circle {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: var(--sage-medium);
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        .circle-1 {
+            top: -100px;
+            left: -100px;
+        }
+        
+        .circle-2 {
+            bottom: -100px;
+            right: -100px;
+            background-color: var(--brown-accent);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 4rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--sage-dark);
+        }
+        
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6rem;
+}
+
+.hero-content {
+    max-width: 50%; /* Limita el ancho del texto para darle espacio a la imagen */
+}
+
+.hero h1 {
+    font-size: 6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    max-width: 600px;
+}
+
+.hero-image {
+    flex: 1; /* La imagen ocupará el espacio restante */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 50%; /* Limita el ancho de la imagen */
+}
+
+.hero-image img {
+    width: 100%; /* Ajusta el tamaño para que sea responsivo */
+    height: auto;
+    max-width: 400px; /* Tamaño máximo de la imagen */
+}
+
+        
+        
+        
+        .trash-bins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .trash-bin {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .trash-bin:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .bin-container {
+            position: relative;
+            width: 100px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .bin-lid, .bin-body {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+        
+        .bin-body {
+            bottom: 0;
+            height: 85%;
+        }
+        
+        .bin-lid {
+            top: 0;
+            height: 20%;
+            transform-origin: top center;
+            z-index: 2;
+        }
+        
+        .trash-bin:hover .bin-lid {
+            transform: translateY(-40%) rotateX(-40deg);
+        }
+        
+        .trash-bin h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--sage-dark);
+            text-align: center;
+        }
+        
+        .trash-bin p {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            text-align: justify;
+        }
+        
+        .decorative-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-color: var(--sage-light);
+            opacity: 0.1;
+            border-radius: 0 0 12px 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .trash-bins-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            max-width: 80%;
+            height: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
+    
+    <div class="container">
+        <nav>
+            <div class="logo">
+                ♻️ UNCP
+            </div>
+            <a href="Prácticas_Ecológicas.html" class="nav-link">Volver a P.E</a>
+        </nav>
+        
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Residuos<br>Sólidos</h1>
+                <p>Aprende a clasificar correctamente los residuos sólidos para contribuir a un futuro más sostenible. Identifica qué tipos de residuos debes depositar en cada contenedor según su color.</p>
+            </div>
+            <div class="hero-image">
+                <img src="images/residuos.png" alt="Imagen de residuos">
+            </div>
+        </section>
+        
+        <div class="trash-bins-grid">
+            <!-- Contenedor Rojo -->
+            <div class="trash-bin">
+                <div class="bin-container">
+                    <img src="images/rojotapa.png" alt="" class="bin-lid">
+                    <img src="images/rojobase.png" alt="Contenedor rojo" class="bin-body">
+                </div>
+                <h3>Residuos Peligrosos</h3>
+                <p>Pilas, luminarias y medicinas vencidas.</p>
+                <div class="decorative-wave"></div>
+            </div>
+
+            <!-- Contenedor Azul -->
+            <div class="trash-bin">
+                <div class="bin-container">
+                    <img src="images/azultapa.png" alt="" class="bin-lid">
+                    <img src="images/azulbase.png" alt="Contenedor azul" class="bin-body">
+                </div>
+                <h3>Papel y Cartón</h3>
+                <p>Para papel, revistas, periódicos y cajas de cartón.</p>
+                <div class="decorative-wave"></div>
+            </div>
+
+            <!-- Contenedor Verde -->
+            <div class="trash-bin">
+                <div class="bin-container">
+                    <img src="images/verdetapa.png" alt="" class="bin-lid">
+                    <img src="images/verdecuerpo.png" alt="Contenedor verde" class="bin-body">
+                </div>
+                <h3>Vidrio</h3>
+                <p>Botellas, tarros y frascos de vidrio van aquí.</p>
+                <div class="decorative-wave"></div>
+            </div>
+
+            <!-- Contenedor Amarillo -->
+            <div class="trash-bin">
+                <div class="bin-container">
+                    <img src="images/amarillotapa.png" alt="" class="bin-lid">
+                    <img src="images/amarillobase.png" alt="Contenedor amarillo" class="bin-body">
+                </div>
+                <h3>Metales</h3>
+                <p>Latas y entre otros.</p>
+                <div class="decorative-wave"></div>
+            </div>
+
+            <!-- Contenedor Marrón -->
+            <div class="trash-bin">
+                <div class="bin-container">
+                    <img src="images/marrontapa.png" alt="" class="bin-lid">
+                    <img src="images/marronbase.png" alt="Contenedor marrón" class="bin-body">
+                </div>
+                <h3>Residuos Orgánicos</h3>
+                <p>Alimentos, hojarasca, entre otros</p>
+                <div class="decorative-wave"></div>
+            </div>
+
+            <!-- Contenedor Negro -->
+            <div class="trash-bin">
+                <div class="bin-container">
+                    <img src="images/negrotapa.png" alt="" class="bin-lid">
+                    <img src="images/negrobase.png" alt="Contenedor naranja" class="bin-body">
+                </div>
+                <h3>No reciclables</h3>
+                <p>Cerámica, papel encerado, residuos sanitarios, entre otros.</p>
+                <div class="decorative-wave"></div>
+            </div>
+
+            <!-- Contenedor Blanco -->
+            <div class="trash-bin">
+                <div class="bin-container">
+                    <img src="images/tapa.png" alt="" class="bin-lid">
+                    <img src="images/base.png" alt="Contenedor naranja" class="bin-body">
+                </div>
+                <h3>Plásticos</h3>
+                <p>Botellas, taperes, bolsas, entre otros.</p>
+                <div class="decorative-wave"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
