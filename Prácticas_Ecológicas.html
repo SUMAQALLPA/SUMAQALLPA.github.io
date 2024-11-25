@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practicas Ecologicas </title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,500;0,600;0,700;0,800;1,100&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="images/prac_ico.png" type="image/x-icon">
+    <style>
+        :root {
+            --sage-light: #e8efe8;
+            --sage-medium: #183818;
+            --sage-dark: rgb(104, 235, 104);
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--sage-light) 0%, var(--sage-medium) 100%);
+            font-family: "Poppins", sans-serif;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 2rem;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .logo {
+            width: 30px;
+            height: 30px;
+            margin: 0 auto;
+        }
+
+        .logo svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--sage-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--sage-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-family: "Poppins", sans-serif;
+            color: var(--sage-dark);
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: var(--sage-medium);
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .card-wrapper {
+            border-radius: 1.5rem;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-wrapper:hover {
+            transform: translateY(-15px);
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            width: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 1rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            background: var(--sage-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .card h3 {
+            color: var(--sage-dark);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .card p {
+            color: var(--sage-medium);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .contactButton {
+            background: var(--sage-light);
+            color: rgb(253, 247, 247);
+            font-family: inherit;
+            padding: 0.45em 1em;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 0.9em;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            align-items: center;
+            background-color: #99e29b;
+            overflow: hidden;
+            position: relative;
+            height: 2.8em;
+            margin-top: 1rem;
+        }
+
+        .contactButton:hover {
+            transform: translate(-0.05em, -0.05em);
+            box-shadow: 0.15em 0.15em var(--sage-light);
+            background-color: #60cf66;/* Color cuando el ratón pasa sobre el botón */
+        }
+
+        .contactButton:active {
+            transform: translate(0.05em, 0.05em);
+            box-shadow: 0.05em 0.05em var(--sage-light);
+        }
+
+        input {
+            width: 100%;
+            max-width: 25vw;
+            padding: 10px;
+            outline: none;
+            border: 3px solid #e7eee2;
+            font-weight: 200;
+            border-radius: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+                font-weight: bold;
+            }
+
+            input {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .grid {
+                grid-template-columns: 1fr;
+                justify-content: center;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 0.7rem;
+            }
+            
+            h1 {
+                display: grid;
+                font-size: 2.3rem;
+                justify-content: center;
+            }
+
+            input {
+                max-width: 100%;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .loader.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Tree animation styles */
+        .tree {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            transform-style: preserve-3d;
+            transform: rotateX(-20deg) rotateY(30deg);
+            animation: treeAnimate 5s linear infinite;
+        }
+
+        @keyframes treeAnimate {
+            0% {
+                transform: rotateX(-20deg) rotateY(360deg);
+            }
+            100% {
+                transform: rotateX(-20deg) rotateY(0deg);
+            }
+        }
+
+        .tree div {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: translateY(calc(25px * var(--x))) translateZ(0px);
+        }
+
+        .tree div.branch span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #69c069, #77dd77);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            border-bottom: 5px solid #00000019;
+            transform-origin: bottom;
+            transform: rotateY(calc(90deg * var(--i))) rotateX(30deg) translateZ(28.5px);
+        }
+
+        .tree div.stem span {
+            position: absolute;
+            top: 110px;
+            left: calc(50% - 7.5px);
+            width: 15px;
+            height: 50%;
+            background: linear-gradient(90deg, #bb4622, #df7214);
+            border-bottom: 5px solid #00000019;
+            transform-origin: bottom;
+            transform: rotateY(calc(90deg * var(--i))) translateZ(7.5px);
+        }
+
+        .shadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            filter: blur(20px);
+            transform-style: preserve-3d;
+            transform: rotateX(90deg) translateZ(-65px);
+        }
+    </style>
+</head>
+<body>
+    <div id="loader" class="loader">
+        <div class="tree">
+            <div class="branch" style="--x:0">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:1">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:2">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:3">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="stem">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <span class="shadow"></span>
+        </div>
+    </div>
+    <div class="container">
+        <nav>
+            <div class="nav-links">
+                <a href="#">UNCP</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">INICIO</a>
+            </div>
+        </nav>
+
+        <header>
+            <h1>PRÁCTICAS ECOLÓGICAS</h1>
+            <p class="subtitle">Algunas maneras de ayudar al medio ambiente.</p> <br>
+            <section id="contenedor-main">
+                <div>
+                    <input type="text" name="buscador" id="buscador" placeholder="Buscar...">    
+                </div>
+            </section>
+        </header>
+
+        <div class="grid" id="practicesGrid">
+            <!-- Cartas -->
+        </div>
+    </div>
+    <script>
+        const practices = [
+            {
+                icon: '🗑️',
+                title: 'Reciclaje',
+                description: 'Conozca las prácticas efectivas de reciclaje y su impacto en el medio ambiente.',
+                link: 'reciclaje1.html',
+                background: 'linear-gradient(135deg, #a8e063, #56ab2f)'
+            },
+            {
+                icon: '🌱',
+                title: 'Compostaje',
+                description: 'Aprende cómo hacer compostaje fácilmente y convierte tus restos orgánicos en un valioso abono natural para tus plantas.',
+                link: 'compostaje.html',
+                background: 'linear-gradient(135deg, #6dd5ed, #2193b0)'
+            },
+            {
+                icon: '🌿',
+                title: 'Residuos Solidos',
+                description: 'Consejos prácticos y guías fáciles para minimizar tu impacto ambiental. ',
+                link: 'practica1.html',
+                background: 'linear-gradient(135deg, #56ab2f, #a8e063)'
+            },
+            {
+                icon: '♻️',
+                title: 'Reducir',
+                description: 'Aprender estrategias para minimizar el desperdicio en las actividades diarias.',
+                link: 'reducir.html',
+                background: 'linear-gradient(135deg, #ff9966, #ff5e62)'
+            },
+            {
+                icon: '🛒',
+                title: 'Compras verdes',
+                description: '¡Compra con propósito!Consejos y guías para consumir de forma responsable y cuidar el planeta. ',
+                link: 'comprasverdes.html',
+                background: 'linear-gradient(135deg, #7f7fd5, #86a8e7, #91eae4)'
+            },
+            {
+                icon: '🌱',
+                title: 'Reutilizar',
+                description: 'Formas creativas de darle una segunda vida a tus objetos.',
+                link: 'reutilizar.html',
+                background: 'linear-gradient(135deg, #43c6ac, #191654)'
+            },
+            {
+                icon: '🔋',
+                title: 'Cuidado de áreas verdes',
+                description: 'Descubre cómo conservar la biodiversidad y mantener el ambiente saludable para todos.',
+                link: 'cuidado.html',
+                background: 'linear-gradient(135deg, #f2709c, #ff9472)'
+            },
+            {
+                icon: '🚲',
+                title: 'Transporte verde',
+                description: 'Alternativas de transporte ecológicas.',
+                link: 'transporteverde.html',
+                background: 'linear-gradient(135deg, #4facfe, #00f2fe)'
+            },
+            {
+                icon: '📚',
+                title: 'Educación verde',
+                description: 'Aprender y compartir conocimientos ambientales.',
+                link: 'educacionverde.html',
+                background: 'linear-gradient(135deg, #667eea, #764ba2)'
+            }
+        ];
+
+        const practicesGrid = document.getElementById('practicesGrid');
+
+        practices.forEach(practice => {
+            const cardWrapper = document.createElement('div');
+            cardWrapper.className = 'card-wrapper';
+            cardWrapper.style.background = practice.background;
+
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            card.innerHTML = `
+                <div class="icon">${practice.icon}</div>
+                
+                <h3>${practice.title}</h3>
+                <p>${practice.description}</p>
+                <button class="contactButton" data-url="${practice.link}">Saber más</button>
+            `;
+
+            cardWrapper.appendChild(card);
+            practicesGrid.appendChild(cardWrapper);
+        });
+
+        document.querySelectorAll(".contactButton").forEach(button => {
+            button.addEventListener("click", function() {
+                const url = this.getAttribute("data-url");
+                const loader = document.getElementById('loader');
+                
+                loader.classList.add('active');
+                
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 1000); // Simulating page load time
+            });
+        });
+
+        const buscador = document.getElementById('buscador');
+        buscador.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            document.querySelectorAll('.card-wrapper').forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

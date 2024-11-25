@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuidado de Áreas Verdes</title>
+    <link rel="shortcut icon" href="images/area_ico.png" type="image/x-icon">
+    <style>
+        :root {
+            --green-dark: #1a4031;
+            --green-medium: #2d5a45;
+            --green-light: #e8f3ea;
+            --soil-dark: #3e2723;
+            --accent: #ffd54f;
+            --color-dark-green: #006B5A;
+            --color-medium-green: #00A884;
+            --color-light-green: #E7F4E8;
+            --color-mint: #F5FAF6;
+            --color-white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--color-mint);
+            color: var(--color-dark-green);
+            line-height: 1.6;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: #57a0808c;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .back-button:hover {
+            background-color: #80d2af8c;
+            transform: translateY(-2px);
+        }
+
+        .back-button .arrow {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        .hero {
+            position: relative;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--color-light-green) 0%, var(--color-mint) 100%);
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            right: -10%;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background-color: var(--color-medium-green);
+            transform: skewX(-15deg);
+            opacity: 0.1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        .hero {
+            min-height: 60vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--sage-light);
+        }
+
+        .hero-content {
+            padding: 2rem;
+        }
+      
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            max-width: 80%;
+            height: auto;
+        }
+
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--color-dark-green);
+        }
+
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-dark {
+            background-color: var(--color-dark-green);
+            color: var(--color-white);
+            clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+            margin: 2rem 0;
+            padding: 8rem 0;
+        }
+
+        .card {
+            background: #A8D08D ;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 32px rgba(0, 107, 90, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--color-medium-green);
+            color: var(--color-white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: var(--color-dark-green);
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1.5rem;
+            fill: var(--color-medium-green);
+        }
+
+        .leaf-decoration {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: var(--color-medium-green);
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+
+        .technique-card {
+            background: var(--color-white);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .technique-icon {
+            width: 64px;
+            height: 64px;
+            background-color: var(--color-light-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-dark-green);
+        }
+
+        .section-dark h2,
+        .section-dark h3 {
+            color: var(--color-white);
+        }
+
+        .plant-card {
+            background: var(--color-white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 107, 90, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .plant-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .plant-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .plant-info {
+            padding: 1.5rem;
+        }
+
+        .plant-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .plant-description {
+            font-size: 0.9rem;
+            color: var(--color-dark-green);
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 1001;
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+        }
+
+        .popup h3 {
+            margin-bottom: 20px;
+            color: var(--green-dark);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--green-medium);
+        }
+
+        .chat-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--green-dark);
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .chat-button:hover {
+            background-color: var(--green-medium);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        @media screen and (max-width: 400px) {
+            .hero {
+                padding: 50px;
+                justify-content: center;
+                text-align: center;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+                text-align: center;
+            }
+            .hero-content {
+                padding: 1rem;
+            }
+            .hero-image img {
+                position: absolute;
+                margin: 10px;
+                top: 0;
+                left: 0;
+                width: 20%;
+                height: 70px;
+                border-radius: 10px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <a href="Prácticas_Ecológicas.html" class="back-button">
+        <span class="arrow">&#8592;</span> Volver a P.E
+    </a>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Prácticas Eco-amigables para Áreas Verdes</h1>
+                <p>Descubre técnicas sostenibles y efectivas para el cuidado y mantenimiento de espacios verdes.</p>
+                <a href="#tecnicas" class="button">Explorar Técnicas</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="/images/img._ practicas eco/CUIDADO DE AREAS.jpeg" alt="Vehículo ecológico">
+        </div>
+    </section>
+
+    <section id="tecnicas" class="section">
+        <div class="container">
+            <h2>Técnicas Especializadas</h2>
+            <div class="grid">
+                <div class="technique-card">
+                    <div class="technique-icon">🌱</div>
+                    <h3>Cultivo Sostenible</h3>
+                    <p>Implementa métodos de cultivo que respetan el medio ambiente y promueven la biodiversidad.</p>
+                </div>
+                <div class="technique-card">
+                    <div class="technique-icon">💧</div>
+                    <h3>Riego Inteligente</h3>
+                    <p>Optimiza el uso del agua mediante sistemas de riego eficientes y tecnologías modernas.</p>
+                </div>
+                <div class="technique-card">
+                    <div class="technique-icon">🌿</div>
+                    <h3>Control Natural</h3>
+                    <p>Utiliza métodos naturales para el control de plagas y el mantenimiento del equilibrio ecológico.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-dark">
+        <div class="container">
+            <h2>Beneficios Ambientales</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Biodiversidad</h3>
+                    <p>Fomenta la diversidad de especies y crea hábitats naturales para la fauna local.</p>
+                </div>
+                <div class="card">
+                    <h3>Calidad del Aire</h3>
+                    <p>Mejora la calidad del aire mediante la absorción de CO2 y la liberación de oxígeno.</p>
+                </div>
+                <div class="card">
+                    <h3>Conservación</h3>
+                    <p>Preserva los recursos naturales y promueve la sostenibilidad a largo plazo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Herramientas Esenciales</h2>
+            <div class="grid">
+                <div class="technique-card">
+                    <h3>Equipo Básico</h3>
+                    <ul>
+                        <li>Herramientas de poda</li>
+                        <li>Sistemas de riego</li>
+                        <li>Equipos de medición</li>
+                    </ul>
+                </div>
+                <div class="technique-card">
+                    <h3>Materiales</h3>
+                    <ul>
+                        <li>Sustratos orgánicos</li>
+                        <li>Fertilizantes naturales</li>
+                        <li>Materiales de compostaje</li>
+                    </ul>
+                </div>
+                <div class="technique-card">
+                    <h3>Tecnología</h3>
+                    <ul>
+                        <li>Sensores de humedad</li>
+                        <li>Sistemas automatizados</li>
+                        <li>Apps de monitoreo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section plantas">
+        <div class="container">
+            <h2>Plantas Recomendadas</h2>
+            <div class="grid">
+                <div class="plant-card">
+                    <img src="/images/img._ practicas eco/RETAMA.jpeg" alt="Lavanda" class="plant-image">
+                    <div class="plant-info">
+                        <h3 class="plant-name">Retama</h3>
+                        <p class="plant-description">Planta de crecimiento rápido, resistente a los climas secos.</p>
+                    </div>
+                </div>
+                <div class="plant-card">
+                    <img src="/images/img._ practicas eco/MANZANILLA.jpeg" alt="Aloe Vera" class="plant-image">
+                    <div class="plant-info">
+                        <h3 class="plant-name">Manzanilla</h3>
+                        <p class="plant-description">Hierba aromática conocida por sus propiedades terapéuticas.</p>
+                    </div>
+                </div>
+                <div class="plant-card">
+                    <img src="/images/img._ practicas eco/ROMERO.jpeg" alt="Romero" class="plant-image">
+                    <div class="plant-info">
+                        <h3 class="plant-name">Romero</h3>
+                        <p class="plant-description">Arbusto aromático y vivaz,de bajo costo de mantenimiento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <span class="popup-close" id="popupClose" aria-label="Cerrar">&times;</span>
+        <h3>¿Deseas saber más?</h3>
+        <p>Chatea con Carloncho para obtener más detalles sobre el cuidado ambiental.</p>
+        <a href="https://www.stack-ai.com/chat-assistant/d1e38f0a-0721-4d63-aa98-f78cd2a62ae0/961b71fa-5ab8-4178-91b3-72aa89ca395e/674405ae53a1023bdafcb1e2" class="chat-button">Chatear con Carloncho</a>
+    </div>
+
+    <script>
+        document.querySelectorAll('.plantas').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+            });
+        });
+
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+        const popupClose = document.getElementById('popupClose');
+        
+        function showPopup() {
+            overlay.style.display = 'block';
+            popup.style.display = 'block';
+        }
+
+        function hidePopup() {
+            overlay.style.display = 'none';
+            popup.style.display = 'none';
+        }
+
+        const faqSection = document.querySelector('.plantas');
+        let popupTimer;
+
+        function startPopupTimer() {
+            popupTimer = setTimeout(showPopup, 5000);
+        }
+
+        function stopPopupTimer() {
+            clearTimeout(popupTimer);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startPopupTimer();
+                } else {
+                    stopPopupTimer();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(faqSection);
+
+        popupClose.addEventListener('click', hidePopup);
+        overlay.addEventListener('click', hidePopup);
+    </script>
+</body>
+</html>

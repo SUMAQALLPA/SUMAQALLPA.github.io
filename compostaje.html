@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Avanzada de Compostaje</title>
+    <link rel="shortcut icon" href="images/comp_ico.webp" type="image/x-icon">
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        :root {
+            --green-dark: #1a4031;
+            --green-medium: #2d5a45;
+            --green-light: #e8f3ea;
+            --soil-dark: #3e2723;
+            --accent: #ffd54f;
+            --text-color: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--green-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .container h2 {
+            text-align: center;
+            padding: 10px;
+            font-family: 'Montserrat', cursive;
+            font-size: 35px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', serif;
+            color: var(--green-dark);
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: var(--green-medium);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .back-button:hover {
+            background-color: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .back-button .arrow {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(26, 64, 49, 0.8), rgba(45, 90, 69, 0.8)), url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 120px 0;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .compost-bin {
+            max-width: 300px;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+
+        .compost-bin:hover {
+            transform: scale(1.05);
+        }
+
+        .compost-bin img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+        }
+
+        .info-cards {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+            
+        }
+
+        .info-card img {
+            height: 60%;
+            width:  250px;
+            align-items: center;
+            border-radius: 30px;
+        }
+
+        .percentage {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 15px 0;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .process-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .process-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .process-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefit-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .benefit-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-item:hover .benefit-image img {
+            transform: scale(1.1);
+        }
+
+        .benefit-content {
+            padding: 20px;
+        }
+
+        .benefit-content h3 {
+            margin-bottom: 10px;
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 20px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 1001;
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+        }
+
+        .popup h3 {
+            margin-bottom: 20px;
+            color: var(--green-dark);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--green-medium);
+        }
+
+        .chat-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--green-dark);
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .chat-button:hover {
+            background-color: var(--green-medium);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .info-cards {
+                display: grid;
+                height: 80%;
+                width: 100%;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+            .container h2 {
+                font-size: 1.5em;
+            }
+            .info-card img {
+            height: 60%;
+            width: 100%;
+            align-items: center;
+            border-radius: 30px;
+        }
+        }
+    </style>
+</head>
+<body>
+    <a href="Prácticas_Ecológicas.html" class="back-button">
+        <span class="arrow">&#8592;</span> Volver a P.E
+    </a>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Compostaje</h1>
+            <p>Transforma tus residuos orgánicos en tierra rica en nutrientes a través del arte del compostaje</p>
+            <div class="compost-bin">
+                <img src="/images/10578899.png" alt="Composting bin with growing plants">
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Elementos esenciales del compostaje</h2>
+            <div class="info-cards">
+                <div class="info-card">
+                    <img src="images/Comp1.jpeg" alt="Recipiente">
+                    <h3>Recipiente</h3>
+                    <p>Un balde,cajas de fruta borrada y macetas.</p>
+                </div>
+                <div class="info-card">
+                    <img src="images/Comp2.jpeg" alt="Cascaras">
+                    <h3>Residuos Orgánicos</h3>
+                    <p>Cáscaras de verduras,frutas,de huevo y otros.</p>
+                </div>
+                <div class="info-card">
+                    <img src="images/Comp3.jpeg" alt="Hojas">
+                    <h3>Hojas</h3>
+                    <p>Almacenar hojas secas.</p>
+                </div>
+                <div class="info-card">
+                    <img src="images/Comp4.jpeg" alt="Tierra">
+                    <h3>Tierra</h3>
+                    <p>La tierra negra o de chacra es especial para el compostaje.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background-color: #f0f8f0;">
+        <div class="container">
+            <h2>El proceso de compostaje</h2>
+            <div class="process-grid">
+                <div class="process-item">
+                    <div class="process-icon">🍃</div>
+                    <h3>Recolección</h3>
+                    <p>Reúna materiales orgánicos de su cocina y jardín</p>
+                </div>
+                <div class="process-item">
+                    <div class="process-icon">🔀</div>
+                    <h3>Mezcla</h3>
+                    <p>Combina materiales verdes y marrones en las proporciones adecuadas</p>
+                </div>
+                <div class="process-item">
+                    <div class="process-icon">♨️</div>
+                    <h3>Descomposición</h3>
+                    <p>Los microorganismos descomponen la materia orgánica</p>
+                </div>
+                <div class="process-item">
+                    <div class="process-icon">🌱</div>
+                    <h3>Maduración</h3>
+                    <p>El compost se enfría y se estabiliza en un suelo rico en nutrientes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Beneficios del compostaje</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-image">
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2213&q=80" alt="Ecológico">
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Ecológico</h3>
+                        <p>Reduce los residuos de los vertederos y las emisiones de gases de efecto invernadero</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-image">
+                        <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Salud del suelo">
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Salud del suelo</h3>
+                        <p>Mejora la estructura del suelo, la fertilidad y la retención de agua</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-image">
+                        <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Rentable">
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Rentable</h3>
+                        <p>Reduce la necesidad de fertilizantes y pesticidas químicos</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-image">
+                        <img src="images/jardineria.jpg" alt="Jardinería doméstica">
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Jardinería doméstica</h3>
+                        <p>Proporciona un buen suelo ya que es elaborado por uno mismo  </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background-color: #f0f8f0;">
+        <div class="container">
+            <h2>Preguntas frecuentes</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        ¿Qué puedo compostar?
+                        <span class="toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Puede compostar la mayoría de los materiales orgánicos, como restos de frutas y verduras, posos de café, cáscaras de huevo, recortes de jardín y productos de papel. Evite la carne, los lácteos y los alimentos grasos.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        ¿Cuánto tiempo se tarda en compostar?
+                        <span class="toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        El compostaje puede tardar entre 2 y 12 meses, dependiendo de los materiales, el método y las condiciones. Los métodos de compostaje en caliente pueden producir compost en tan solo 4-6 semanas.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        ¿Necesito un contenedor especial para compostar?
+                        <span class="toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Si bien no es estrictamente necesario, un contenedor de compost ayuda a contener los materiales, retener el calor y la humedad, y mantener alejadas a las plagas. Puedes comprar un contenedor o hacer el tuyo propio con madera o malla de alambre.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <span class="popup-close" id="popupClose" aria-label="Cerrar">&times;</span>
+        <h3>¿Tienes una duda más compleja?</h3>
+        <p>Chatea con Carloncho para obtener respuestas detalladas a tus preguntas sobre compostaje.</p>
+        <a href="https://www.stack-ai.com/chat-assistant/d1e38f0a-0721-4d63-aa98-f78cd2a62ae0/961b71fa-5ab8-4178-91b3-72aa89ca395e/674405ae53a1023bdafcb1e2" class="chat-button">Chatear con Carloncho</a>
+    </div>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+            });
+        });
+
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+        const popupClose = document.getElementById('popupClose');
+        
+        function showPopup() {
+            overlay.style.display = 'block';
+            popup.style.display = 'block';
+        }
+
+        function hidePopup() {
+            overlay.style.display = 'none';
+            popup.style.display = 'none';
+        }
+
+        const faqSection = document.querySelector('.faq-list');
+        let popupTimer;
+
+        function startPopupTimer() {
+            popupTimer = setTimeout(showPopup, 15000);
+        }
+
+        function stopPopupTimer() {
+            clearTimeout(popupTimer);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startPopupTimer();
+                } else {
+                    stopPopupTimer();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(faqSection);
+
+        popupClose.addEventListener('click', hidePopup);
+        overlay.addEventListener('click', hidePopup);
+    </script>
+</body>
+</html>

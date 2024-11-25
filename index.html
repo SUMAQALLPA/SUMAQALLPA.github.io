@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUMAQ ALLPA</title>
+    <link rel="shortcut icon" href="images/icon_index.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css"/>
+</head>
+
+
+<body class="cuerpo">
+
+   
+    <header class="header">
+        <div class="header-content container">
+            <h1 class="animated-title">S U M A Q  A L L P A</h1><br>
+            <h2 class="traduccion"><br><br> "Tierra Hermosa"</h2> 
+            <br> 
+        </div>
+        <div class="uncp">
+            <img src="/images/icon.png" alt="">
+        </div>
+        
+        
+
+        <div id="sidebar" class="sidebar">
+            <button class="closebtn" onclick="closeNav()"><b>✖</b></button>
+            <a href="index.html">Inicio</a>
+            <a href="Prácticas_Ecológicas.html">Prácticas Ecológicas</a>
+            <a href="Biohuertos.html">Biohuertos</a>
+            <a href="SobreNosotros.html">Sobre Nosotros</a>
+            <a href="https://www.stack-ai.com/chat-assistant/d1e38f0a-0721-4d63-aa98-f78cd2a62ae0/961b71fa-5ab8-4178-91b3-72aa89ca395e/674405ae53a1023bdafcb1e2">Chatbot</a>
+        </div>
+        <div id="main">
+            <button class="openbtn" onclick="openNav()">☰</button>
+        </div>
+        
+        <div class="menu container">
+            <nav class="navbar">
+                <ul>    
+                    <li><a href="#novedades">Novedades</a></li>
+                    <li><a href="#sabias">Sabías qué</a></li>
+                    <li><a href="#juegos">Repositorio</a></li>
+                    <li><a href="#sobreNosotros">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        
+    
+        
+    </header>
+
+    <div id="chat-widget">
+        <div id="chat-button-container">
+            <button id="chat-button" aria-label="Abrir chat">
+                <img src="/images/capfeo.jpg" alt="Mascota del chat">
+            </button>
+            <div id="chat-bubble">Hola! soy kapiwara, chatea conmigo</div>
+        </div>
+        <div id="chat-window">
+            <div id="chat-header">
+                <div id="chat-header-left">
+                    <img id="chat-header-avatar" src="/images/capfeo.jpg" alt="Avatar del chat">
+                    <span>Tu Kapiwara</span>
+                </div>
+                <button id="close-chat" aria-label="Cerrar chat">✖</button>
+            </div>
+            <div id="chat-messages"></div>
+            <div id="chat-input">
+                <input type="text" id="inputText" placeholder="Escribe tu mensaje...">
+                <button id="generateButton">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+    </script>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        // Reemplaza 'YOUR_API_KEY' con tu clave de API real
+        const API_KEY = 'AIzaSyCLq5BHxfCA1mPWBO4MEa_hUMg122jY7BU';
+        const genAI = new GoogleGenerativeAI(API_KEY); 
+        const chatButton = document.getElementById('chat-button');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChat = document.getElementById('close-chat');
+        const chatMessages = document.getElementById('chat-messages');
+        const inputText = document.getElementById('inputText');
+        const generateButton = document.getElementById('generateButton');
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatButtonContainer = document.getElementById('chat-button-container');
+
+        chatButton.addEventListener('click', () => {
+            chatWindow.style.display = 'block';
+            chatButtonContainer.style.display = 'none';
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatWindow.style.display = 'none';
+            chatButtonContainer.style.display = 'block';
+            chatBubble.style.display = 'none';
+        });
+
+        function addMessage(text, isUser) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+
+            if (!isUser) {
+                const avatarElement = document.createElement('img');
+                avatarElement.classList.add('message-avatar');
+                avatarElement.src = '/images/cap.png';
+                avatarElement.alt = 'Avatar del bot';
+                messageElement.appendChild(avatarElement);
+            }
+
+            const contentElement = document.createElement('div');
+            contentElement.classList.add('message-content');
+            contentElement.textContent = text;
+
+            messageElement.appendChild(contentElement);
+
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        generateButton.addEventListener('click', async () => {
+            const userInput = inputText.value.trim();
+            if (userInput) {
+                addMessage(userInput, true);
+                inputText.value = '';
+
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest"});
+                const prompt = userInput;
+
+                try {
+                    addMessage('Escribiendo...', false);
+                    const result = await model.generateContent(prompt);
+                    const response = await result.response;
+                    chatMessages.removeChild(chatMessages.lastChild);
+                    addMessage(response.text(), false);
+                } catch (error) {
+                    console.error('Error al generar contenido:', error);
+                    chatMessages.removeChild(chatMessages.lastChild);
+                    addMessage('Lo siento, ha ocurrido un error. Por favor, intenta de nuevo.', false);
+                }
+            }
+        });
+
+        inputText.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                generateButton.click();
+            }
+        });
+
+        // Mostrar el globo de texto después de 3 segundos
+        setTimeout(() => {
+            chatBubble.style.display = 'block';
+        }, 3000);
+
+        // Ocultar el globo de texto después de 10 segundos
+        setTimeout(() => {
+            chatBubble.style.display = 'none';
+        }, 13000);
+    </script>
+
+    <section id="novedades">
+    <script>
+        let news = [];
+        let currentIndex = 0;
+
+        async function fetchRSSFeed() {
+            const rssUrl = 'https://feeds.elpais.com/mrss-s/list/ep/site/elpais.com/section/clima-y-medio-ambiente';
+            const response = await fetch(rssUrl);
+            const text = await response.text();
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(text, 'application/xml');
+            return xml;
+        }
+
+        function parseRSSFeed(xml) {
+            const items = xml.querySelectorAll('item');
+            let parsedNews = [];
+            items.forEach(item => {
+                const title = item.querySelector('title').textContent;
+                const link = item.querySelector('link').textContent;
+                const description = item.querySelector('description').textContent;
+                const pubDate = item.querySelector('pubDate').textContent;
+                const mediaContent = item.getElementsByTagName('media:content')[0];
+                const imageUrl = mediaContent ? mediaContent.getAttribute('url') : '/images/default.jpg';
+
+                parsedNews.push({ title, link, description, pubDate, imageUrl });
+            });
+            return parsedNews;
+        }
+
+        function updateNewsSection() {
+            const carouselInner = document.querySelector('.carousel-inner');
+            carouselInner.innerHTML = ''; // Vaciar el contenido actual
+
+            
+
+            news.forEach((item, index) => {
+                const carouselItem = document.createElement('div');
+                carouselItem.className = 'carousel-item';
+                carouselItem.innerHTML = `
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">${item.title}</h3>
+                            <span class="card-date">${new Date(item.pubDate).toLocaleDateString()}</span>
+                        </div>
+                        <div class="card-content">
+                            <img src="${item.imageUrl}" alt="Imagen no disponible">
+                            <p>${item.description}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="${item.link}" class="btn">Leer más</a>
+                        </div>
+                    </div>
+                `;
+                carouselInner.appendChild(carouselItem);
+            });
+
+            updateCarouselIndicators();
+            showCurrentSlide();
+        }
+
+        function updateCarouselIndicators() {
+            const indicatorsContainer = document.querySelector('.carousel-indicators');
+            indicatorsContainer.innerHTML = '';
+            news.forEach((_, index) => {
+                const indicator = document.createElement('span');
+                indicator.className = `indicator ${index === currentIndex ? 'active' : ''}`;
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    showCurrentSlide();
+                });
+                indicatorsContainer.appendChild(indicator);
+            });
+        }
+
+        function showCurrentSlide() {
+            const carouselInner = document.querySelector('.carousel-inner');
+            const itemWidth = document.querySelector('.carousel-item').offsetWidth;
+            carouselInner.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+            
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        function moveCarousel(direction) {
+            const maxIndex = news.length - 1;
+            if (direction === 'next') {
+                currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
+            } else {
+                currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
+            }
+            showCurrentSlide();
+        }
+
+        async function refreshNews() {
+            const rssFeed = await fetchRSSFeed();
+            news = parseRSSFeed(rssFeed).slice(0, 5);
+            updateNewsSection();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            refreshNews();
+            
+            const prevButton = document.querySelector('.carousel-control.prev');
+            const nextButton = document.querySelector('.carousel-control.next');
+            
+            prevButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                moveCarousel('prev');
+            });
+            
+            nextButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                moveCarousel('next');
+            });
+
+            // Refrescar noticias cada 24 horas (86400000 ms)
+            setInterval(refreshNews, 86400000);
+        });
+
+    </script>
+        <div class="UltimasNoticias">
+            <h2>ULTIMAS NOTICIAS</h2>
+            <div class="carousel">
+                <div class="carousel-inner">
+
+                </div>
+                <a href="#" class="carousel-control prev" aria-label="Noticia anterior">&lt;</a>
+                <a href="#" class="carousel-control next" aria-label="Noticia siguiente">&gt;</a>
+                <div class="carousel-indicators"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="sabias">
+        <div class="card-group">
+            <div class="titulo-noticias">
+                <h2 class="titulin">SABÍAS QUÉ</h2>
+            </div>
+            <div class="cardi">
+                <img src="images/sabias1.jpg" alt="#">
+                <div class="layer"></div>
+                <div class="info">
+                    <h1>AGUA?...</h1>
+                    <p>
+                        El 70% de la superficie terrestre está cubierta de agua, pero solo el 2,2% es agua dulce y solo el 0,3% es potable.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="juegos">
+        <div class="juegos-texto">
+            <h2>REPOSITORIO DIGITAL MINAM</h2>
+            <p>¡Felicidades! Eres la visita número</p>
+            <a href="" title="contador de visitas para blog"><img src="https://counter6.optistats.ovh/private/contadorvisitasgratis.php?c=qbdlhtnrhby8tm7ycyf1esm9h4e14fmg" border="0" title="contador de visitas para blog" alt="contador de visitas para blog"></a>
+            <div id="visitas" class="numero-visita"></div>
+            <a href="https://repositoriodigital.minam.gob.pe/" class="gameover" id="plantar-arbol"><strong>TOMA CONCIENCIA</strong></a>
+            <p class="nota">Cada clic representa un compromiso simbólico con el medio ambiente.</p>
+        </div>
+    </section>
+    
+    <section id="sobreNosotros" class="sobreNosotros">
+        <div class="ContenidoNosotros">
+            <div class="content-wrapper">
+                <div class="content">
+                    <h1>Quiénes Somos</h1>
+                    <p>  Somos un equipo interesado en fomentar el cuidado del medio ambiente en zonas urbanas
+                         y promover un futuro sostenible. Nuestra misión es transformar los entornos urbanos 
+                         en espacios más verdes, saludables y sostenibles, donde las personas puedan convivir
+                         en armonía con la naturaleza. Creemos que, con acciones concretas y cambios en el diseño 
+                         de nuestras ciudades, es posible reducir el impacto ambiental y mejorar la calidad de 
+                         vida de sus habitantes.
+                    </p>
+                    <a href="sobreNosotros.html" class="cta-button">Descubre más sobre nosotros</a>
+                </div>
+                <img src="images/sn1.jpg" alt="Equipo de EcoAventura en acción" class="side-image">
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <button id="volverArriba" aria-label="Volver arriba">↑</button>
+
+    <footer class="footer">
+        <div class="footer-contenido"></div>
+            <div class="link">
+                <h3>CONTÁCTANOS   ☏</h3>
+                <ul>
+                    <li><a href="#">Jelibeth Ramirez Vilchez</a></li>
+                    <li><a href="#">Ximena Chihuan Cardenas</a></li>
+                    <li><a href="#">Ruben Sinche Rojas</a></li>
+                    <li><a href="#">Andersen Aguilar Enriquez</a></li>
+                    <li><a href="#">Karol Balbin Puñez</a></li>
+                    <li><a href="#">Hilari Zerpa Salazar</a></li>
+                    <li><a href="#">Michael Chancan Alania</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="social-media">
+            <p>&copy; 2024 sumaqallpa@gmail.com Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+<script src="script.js"></script>
+</html>

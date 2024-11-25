@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educación Verde</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="images/educ_ico.png" type="image/x-icon">
+    <style>
+        :root {
+            --color-sage: #8B9B8B;
+            --color-olive: #4A5D4A;
+            --color-cream: #F5F5F0;
+            --color-dark-green: #2C3B2C;
+        }
+    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--color-cream);
+            color: var(--color-dark-green);
+            line-height: 1.6;
+        }
+    
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: #607f55cd;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .back-button:hover {
+            background-color: rgba(104, 170, 73, 0.459);
+            transform: translateY(-2px);
+        }
+
+        .back-button .arrow {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        .header {
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+    
+        .nav-top {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem;
+            gap: 2rem;
+        }
+    
+        .nav-top a {
+            color: var(--color-dark-green);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    
+        .main-nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem;
+            gap: 2rem;
+            background-color: var(--color-sage);
+            border-radius: 50px 0 0 50px;
+            margin-left: auto;
+            width: 50%;
+        }
+    
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+    
+        .logo {
+            position: absolute;
+            top: 5rem;
+            left: 5rem;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #6B8E23, #4A5D4A);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    
+        .logo-leaf {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L4 7v10l8 5 8-5V7l-8-5z'/%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L4 7v10l8 5 8-5V7l-8-5z'/%3E%3C/svg%3E") no-repeat center;
+        }
+    
+        .hero {
+            min-height: 80vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+        }
+    
+        .hero-content {
+            padding: 2.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    
+        .hero-title {
+            font-size: 8rem;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+    
+       
+        .section {
+            padding: 5rem;
+            background-color: white;
+            margin-bottom: 2rem;
+        }
+    
+        .section h2 {
+            color: var(--color-olive);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+    
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+    
+        .content-item {
+            text-align: center;
+            background-color: var(--color-cream);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+    
+        .content-item:hover {
+            transform: translateY(-5px);
+        }
+    
+        .content-item h3 {
+            color: var(--color-dark-green);
+            margin-bottom: 1rem;
+        }
+    
+        .content-item p {
+            text-align: left;
+            font-size: 0.9rem;
+        }
+    
+        .catalog-item {
+            text-align: center;
+        }
+    
+        .content-item a{
+            display: grid;
+            font-size: 13px;
+            color: #2C3E50;
+            text-decoration: none;
+            background-color: #7C9A92;
+            padding: 3px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding-top: 2px;
+            align-items: center;
+            align-items: center;
+        }
+
+        .catalog-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        /* styles.css */
+        .enlace {
+            color: black; /* Color inicial del enlace */
+            text-decoration: none; /* Para quitar el subrayado del enlace */
+        }
+
+        .enlace:hover {
+            color: white; /* Color del enlace al pasar el puntero */
+            transition: color 0.3s, background-color 0.3s; /* Suaviza la transición del color */
+        }
+
+    
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 2rem;
+            }
+    
+            .hero-decoration {
+                width: 100%;
+                border-radius: 0 0 50% 50%;
+            }
+    
+            .main-nav {
+                width: 100%;
+                border-radius: 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    
+        @media (max-width: 400px) {
+            .header {
+                padding: 0.5rem;
+            }
+    
+            .nav-top {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+    
+            .main-nav {
+                flex-direction: column;
+                align-items: center;
+                padding: 0.5rem;
+                width: 100%;
+                border-radius: 0;
+            }
+    
+            .main-nav a {
+                padding: 0.5rem;
+                width: 100%;
+                text-align: center;
+            }
+    
+            .logo {
+                top: 1rem;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 50px;
+            }
+    
+            .logo-leaf {
+                width: 25px;
+                height: 25px;
+            }
+    
+            .hero-content {
+                padding: 1rem;
+                text-align: center;
+            }
+            header {
+                padding: 20px;
+            }
+            .hero-title {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                word-break: break-word;
+                hyphens: auto;
+            }
+    
+            .hero-content p {
+                font-size: 0.9rem;
+                br {
+                    display: none;
+                }
+            }
+            .section h2{
+                text-align: center;
+            }
+        }
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-image img {
+            max-width: 80%;
+            height: auto;
+        }
+
+
+    </style>
+</head>
+<a href="Prácticas_Ecológicas.html" class="back-button">
+    <span class="arrow">&#8592;</span> Volver a P.E
+</a>
+<body>
+    <header>
+
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Educación Verde</h1>
+                <p> Enfoque educativo que promueve la conciencia ambiental y la sostenibilidad.</p>
+            </div>
+            <div class="hero-image">
+                <img src="images/educacionverde.png" alt="Vehículo ecológico">
+            </div>
+            <div class="hero-decoration"></div>
+        </section>
+
+        <div class="section" id="guias">
+            <h2>Guías Educativas</h2>
+            <div class="content-grid">
+                <div class="content-item">
+                    <h3>Guía de Reciclaje</h3>
+                    <p>Aprende a clasificar y reciclar correctamente diferentes tipos de residuos.</p>
+                    <br>
+                    <a class="enlace" href="https://sinba.pe/guia-de-reciclaje/">
+                        LINK DE LA GUÍA</a>
+                </div>
+                <div class="content-item">
+                    <h3>Manual de Conservación</h3>
+                    <p>Descubre técnicas y estrategias para la conservación de ecosistemas.</p>
+                    <br>
+                    <a class="enlace" href="https://cdn.www.gob.pe/uploads/document/file/312934/Guía_Rápida_PP0144_-_Conservación_y_recuperación_de_ecosistemas_.pdf">
+                        LINK DE CONSERVACIÓN</a>
+                </div>
+                <div class="content-item">
+                    <h3>Guía de Energías Renovables</h3>
+                    <p>Explora las diferentes fuentes de energía limpia y su implementación.</p>
+                    <br>
+                    <a class="enlace" href="https://www.argentina.gob.ar/economia/energia/energia-electrica/renovables/que-son-las-energias-renovables">
+                        LINK DE LAS ENERGÍAS</a>
+                </div>
+                <div class="content-item">
+                    <h3>Educación Ambiental para Niños</h3>
+                    <p>Recursos y actividades para enseñar a los más pequeños sobre el cuidado del medio ambiente.</p>
+                    <br>
+                    <a class="enlace" href="https://mma.gob.cl/educacion-ambiental/nuevos-materiales-de-educacion-ambiental/">
+                        LINK DE LOS RECURSOS</a>    
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="catalogos">
+            <h2>Catálogos</h2>
+            <div class="content-grid">
+                <div class="catalog-item">
+                    <img src="images/libros.jpg" alt="Libros de Texto Ecológicos">
+                    <h3>Libros de Texto Ecológicos</h3>
+                    <p>Colección de libros sobre medio ambiente y sostenibilidad.</p>
+                </div>
+                <div class="catalog-item">
+                    <img src="images/huella-carbono.jpg" alt="Kits de Experimentos Ambientales">
+                    <h3>Cálculo de tu Huella Ecológica</h3>
+                    <p>Aprende a mejorar y reducir tu Huella de Carbono.</p>
+                </div>
+                <div class="catalog-item">
+                    <img src="images/poster.jpg" alt="Pósters Educativos">
+                    <h3>Pósters Educativos</h3>
+                    <p>Pósters informativos sobre biodiversidad y ecosistemas.</p>
+                </div>
+                <div class="catalog-item">
+                    <img src="images/animales.jpg" alt="Juegos de Mesa Ecológicos">
+                    <h3>Biodiversidad Animal</h3>
+                    <p>Descubre grandes curiosidades sobre los animales y protégelos.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="recursos">
+            <h2>Recursos Educativos</h2>
+            <div class="content-grid">
+                <div class="content-item">
+                    <h3>Presentaciones sobre Cambio Climático</h3>
+                    <p>Material audiovisual para explicar las causas y consecuencias del cambio climático.</p>
+                    <br>
+                    <a class="enlace" href="https://www.cip.org.pe/publicaciones/2022/octubre/portal/exp-pamela-davila-gestion-integral-cambio-climatico.pdf">
+                        LINK DE LAS PRESENTACIONES</a>
+                </div>
+                <div class="content-item">
+                    <h3>Fichas de Trabajo sobre Medio Ambiente</h3>
+                    <p>Plantillas para aprender sobre el medio ambiente .</p>
+                    <br>
+                    <a class="enlace" href="https://www.minedu.gob.pe/educacion-ambiental/recursos-cursos.php#forestales">
+                        LINK DE LAS CARTILLAS</a>
+                </div>
+                <div class="content-item">
+                    <h3>Videos Educativos de Ecología</h3>
+                    <p>Colección de videos sobre diversos temas ecológicos y ambientales.</p>
+                    <br>
+                    <a class="enlace" href="https://www.youtube.com/watch?v=cmlITg5xIb0&list=PLA4bq6x5_N8FXPwKC1MjnFyG8rC5E48TF">
+                        LINK DE LOS VIDEOS</a>
+                </div>
+                <div class="content-item">
+                    <h3>Infografías sobre Consumo Responsable</h3>
+                    <p>Recursos visuales para promover hábitos de consumo sostenibles.</p>
+                    <br>
+                    <a class="enlace" href="https://publuu.com/flip-book/718064/1595351">
+                        LINK DE LAS INFOGRAFÍAS</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

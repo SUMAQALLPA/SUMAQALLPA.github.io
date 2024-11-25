@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REUTILIZAR</title>
+    <link rel="shortcut icon" href="images/rec_ico.png" type="image/x-icon">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --green-dark: #1a4031;
+            --green-medium: #2d5a45;
+            --green-light: #e8f3ea;
+            --soil-dark: #3e2723;
+            --color-green: #8BC34A;
+            --color-sage: #A8C5A9;
+            --color-brown: #8B6B4D;
+            --color-gray: #333333;
+            --color-light: #F5F5F5;
+            --accent: #ffd54f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: white;
+            color: var(--color-gray);
+            line-height: 1.6;
+        }
+        
+        /* Hero Section - Asymmetrical Design */
+        .hero {
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            grid-template-columns: 1fr 1fr;
+            display: grid;
+            align-items: center;
+            background: linear-gradient(135deg, white 60%, var(--color-sage) 60%);
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 7.3rem;
+            margin-bottom: 2rem;
+        }
+        .hero p {
+            font-size: 1.5rem;
+        }
+        
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            max-width: 80%;
+            height: auto;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: rgba(26, 149, 10, 0.442);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .back-button:hover {
+            background-color: rgba(104, 170, 73, 0.459);
+            transform: translateY(-2px);
+        }
+
+        .back-button .arrow {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Benefits Section - Grid Layout */
+        .benefits {
+            padding: 4rem 2rem;
+            background-color: var(--color-light);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .benefit-card img {
+            height: 200px;
+            width: 200px;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        /* Tools Section - Diagonal Layout */
+        .tools {
+            padding: 4rem 2rem;
+            background: linear-gradient(45deg, var(--color-sage) 50%, white 50%);
+            position: relative;
+        }
+        
+        .tools-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            
+        }
+        
+        .tool-item {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .tool-item li {
+            text-align: left;
+        }
+        .tool-item img {
+            height: 200px;
+            width: 200px;
+            border-radius: 20px;
+        }
+        .tool-item h3 {
+            font-family: 'Pacifico', cursive;
+            font-size: 25px;
+            padding: 20px;
+        }
+        /* Why Section - Wave Design */
+        .why {
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .why::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: var(--color-white);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 50%);
+        }
+        
+        .why-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        /* Common Styles */
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 1rem;
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 1001;
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+        }
+
+        .popup h3 {
+            margin-bottom: 20px;
+            color: var(--green-dark);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--green-medium);
+        }
+
+        .chat-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--green-dark);
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .chat-button:hover {
+            background-color: var(--green-medium);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-image img {
+                position: fixed;
+                margin: 10px;
+                top: 0;
+                left: 0;
+                width: 20%;
+                height: 70px;
+            }
+            .hero {
+                padding: 4.8rem;
+                display: flex;
+                text-align: center;
+            }
+        }
+        .carousel-control {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            font-size: 1.5em;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-control:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-control.prev { left: 10px; }
+        .carousel-control.next { right: 10px; }
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: white;
+        }
+        footer {
+            background: linear-gradient(to bottom, #e6f7e6, #d2f0d2);
+            padding: 4rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .max-w-6xl {
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+        h2 {
+            font-size: 2rem;
+            color: #276749;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+        .grid-cols-1 {
+            grid-template-columns: 1fr;
+        }
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .card:hover {
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-0.5rem);
+        }
+        .icon {
+            color: #38a169;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        h3 {
+            font-size: 1.25rem;
+            color: #276749;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            color: #276749;
+        }
+        .footer-text {
+            text-align: center;
+            color: #276749;
+            margin-top: 3rem;
+            max-width: 36rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .footer-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4rem;
+            background: #9ae6b4;
+            opacity: 0.2;
+            transform: skewY(-5deg);
+        }
+
+        @media (min-width: 768px) {
+            .md\:grid-cols-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 767px) {
+            footer {
+                padding: 3rem 1rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            .card {
+                padding: 1.25rem;
+            }
+            .icon {
+                font-size: 1.75rem;
+            }
+            h3 {
+                font-size: 1.1rem;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+            .footer-text {
+                font-size: 0.9rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <a href="Prácticas_Ecológicas.html" class="back-button">
+        <span class="arrow">&#8592;</span> Volver a P.E
+    </a>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Reutilizar</h1>
+            <p>Transformando el presente, construyendo un futuro sostenible</p>
+        </div>
+        <div class="hero-image">
+            <img src="images/reutilizar11.png" alt="Vehículo ecológico">
+        </div>
+    </section>
+
+    <section class="benefits">
+        <h2>Beneficios</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <img src="images/Reduccion_residuos.jpg" alt="Icono" class="icon">
+                <h3>Reducción de Residuos</h3>
+                <p>Minimiza el impacto ambiental reduciendo la cantidad de desechos.</p>
+            </div>
+            <div class="benefit-card">
+                <img src="images/ahorro.jpg" alt="Icono" class="icon">
+                <h3>Ahorro Económico</h3>
+                <p>Aprovecha al máximo los recursos existentes.</p>
+            </div>
+            <div class="benefit-card">
+                <img src="images/Conservacion.jpg" alt="Icono" class="icon">
+                <h3>Conservación</h3>
+                <p>Protege los recursos naturales para futuras generaciones.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="tools">
+        <h2>Formas de Reutilizar</h2>
+        <div class="tools-content">
+
+            <div class="tool-item">
+                <img src="/images/img._ practicas eco/ELECTRONICA Y TEC.jpeg" alt="Icono" class="icon">
+                    <h3>Electrónica y tecnología</h3>
+                    <ul>
+                        <li>Repara tus dispositivos electrónicos en lugar de reemplazarlos</li>
+                        <li>Opta por marcas de tecnología con prácticas sostenibles</li>
+                        <li>Compra dispositivos reacondicionados o de segunda mano</li>
+                    </ul>
+            </div>
+            <div class="tool-item">
+                <img src="/images/img._ practicas eco/COCINA SOST.jpeg" alt="Icono" class="icon">
+                    <h3>Cocina sostenible</h3>
+                    <ul>
+                        <li>Reutiliza frascos de vidrio para almacenar alimentos</li>
+                        <li>Usa los restos de comida para hacer compost</li>
+                        <li>Crear nuevos utensilios con lo que ya no usas</li>
+                    </ul>
+            </div>
+            <div class="tool-item">
+                <img src="/images/img._ practicas eco/OFICINA ECO.jpeg" alt="Icono" class="icon">
+                    <h3>Oficina ecológica</h3>
+                    <ul>
+                        <li>Reutiliza papel para notas y borradores</li>
+                        <li>Usa lápices y bolígrafos recargables</li>
+                        <li>Configura impresiones en doble cara para ahorrar papel</li>
+                        <li>Dona o intercambia suministros de oficina en desuso</li>
+                    </ul>
+            </div>
+            <div class="tool-item">
+                <img src="/images/img._ practicas eco/JARDINERIA ECO.jpeg" alt="Icono" class="icon">
+                    <h3>Jardinería sostenible</h3>
+                    <ul>
+                        <li>Reutiliza envases de plástico como macetas</li>
+                        <li>Recoge agua de lluvia para regar las plantas</li>
+                        <li>Intercambia plantas y semillas con vecinos o amigos</li>
+                    </ul>
+            </div>
+            <div class="tool-item">
+                <img src="/images/img._ practicas eco/LIMPIEZA ECO.jpeg" alt="Icono" class="icon">
+                    <h3>Limpieza ecológica</h3>
+                    <ul>
+                        <li>Usa trapos de tela en lugar de toallas de papel</li>
+                        <li>Reutiliza botellas para hacer tus propios limpiadores naturales</li>
+                        <li>Compra productos de limpieza a granel o en envases reutilizables</li>
+                        <li>Haz tus propios limpiadores con ingredientes como vinagre y bicarbonato</li>
+                    </ul>
+            </div>
+            <div class="tool-item">
+                <img src="/images/img._ practicas eco/VIAJES SOT.jpeg" alt="Icono" class="icon">
+                    <h3>Viajes sostenibles</h3>
+                    <ul>
+                        <li>Lleva tu botella de agua reutilizable</li>
+                        <li>Opta por alojamientos con prácticas sostenibles</li>
+                        <li>Lleva bolsas de tela para evitar plásticos desechables</li>
+                    </ul>
+            </div>
+            <div class="tool-item">
+                <img src="/images/img._ practicas eco/MODA SOT.jpeg" alt="Icono" class="icon">
+                <h3>Moda sostenible</h3>
+                <ul>
+                    <li>Compra ropa de segunda mano</li>
+                    <li>Apoya a marcas de moda ética</li>
+                    <li>Repara y reutiliza tus prendas</li>
+                    <li>Organiza intercambios de ropa</li>
+                </ul>
+            </div>
+            <div class="tool-item">
+                <img src="/images/img._ practicas eco/CELEBRACIONES ECO.jpeg" alt="Icono" class="icon">
+                    <h3>Celebraciones ecoamigables</h3>
+                    <ul>
+                        <li>Reutiliza decoraciones de años anteriores</li>
+                        <li>Regala experiencias en lugar de objetos materiales</li>
+                        <li>Envuelve regalos con tela o papel reciclado</li>
+                        <li>Usa platos y utensilios reutilizables en lugar de desechables</li>
+                    </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="max-w-6xl">
+          <h2>¿Por qué Reutilizar?</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3">
+            <div class="card">
+              <div class="icon">🍃</div>
+              <h3>Conservación de Recursos</h3>
+              <p>Reutilizar reduce la demanda de nuevos recursos y ayuda a conservar los existentes para futuras generaciones.</p>
+            </div>
+            <div class="card">
+              <div class="icon">♻️</div>
+              <h3>Reducción de Residuos</h3>
+              <p>Al reutilizar, disminuimos la cantidad de residuos que terminan en vertederos, contribuyendo a un planeta más limpio.</p>
+            </div>
+            <div class="card">
+              <div class="icon">👍</div>
+              <h3>Impacto Económico</h3>
+              <p>La reutilización puede ahorrar dinero a nivel individual y reducir los costos de gestión de residuos para la sociedad.</p>
+            </div>
+          </div>
+          <p class="footer-text">
+            La reutilización es fundamental para crear un futuro sostenible. Cada pequeña acción cuenta en la preservación de nuestro planeta para las generaciones futuras.
+          </p>
+        </div>
+        <div class="footer-overlay"></div>
+    </footer>
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <span class="popup-close" id="popupClose" aria-label="Cerrar">&times;</span>
+        <h3>¡Carloncho también tiene recomendaciones sobre reutilizar!</h3>
+        <p>¿Quieres averiguarlo y saber más?</p>
+        <a href="https://www.stack-ai.com/chat-assistant/d1e38f0a-0721-4d63-aa98-f78cd2a62ae0/961b71fa-5ab8-4178-91b3-72aa89ca395e/674405ae53a1023bdafcb1e2" class="chat-button">Chatear con Carloncho</a>
+    </div>
+    <script>
+        document.querySelectorAll('.max-w-6xl').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+            });
+        });
+    
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+        const popupClose = document.getElementById('popupClose');
+        
+        function showPopup() {
+            overlay.style.display = 'block';
+            popup.style.display = 'block';
+        }
+    
+        function hidePopup() {
+            overlay.style.display = 'none';
+            popup.style.display = 'none';
+        }
+    
+        const faqSection = document.querySelector('.max-w-6xl');
+        let popupTimer;
+    
+        function startPopupTimer() {
+            popupTimer = setTimeout(showPopup, 5000);
+        }
+    
+        function stopPopupTimer() {
+            clearTimeout(popupTimer);
+        }
+    
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startPopupTimer();
+                } else {
+                    stopPopupTimer();
+                }
+            });
+        }, { threshold: 0.1 });
+    
+        observer.observe(faqSection);
+    
+        popupClose.addEventListener('click', hidePopup);
+        overlay.addEventListener('click', hidePopup);
+    </script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reciclaje: Un Futuro Sostenible</title>
+    <link rel="shortcut icon" href="images/rec_ico.png" type="image/x-icon">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        :root {
+            --green-dark: #1a4031;
+            --green-medium: #2d5a45;
+            --green-light: #e8f3ea;
+            --soil-dark: #3e2723;
+            --accent: #ffd54f;
+            --primary-color: #4CAF50;
+            --secondary-color: #8BC34A;
+            --text-color: #333;
+            --background-color: #F1F8E9;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: rgba(26, 149, 10, 0.442);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .back-button:hover {
+            background-color: rgba(104, 170, 73, 0.459);
+            transform: translateY(-2px);
+        }
+
+        .back-button .arrow {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        
+        .hero {
+            height: 75vh;
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: url('/reproducción/reciclaje1.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            color: white;
+            padding: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 5em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero p { 
+            font-size: 35px;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-size: clamp(1.5rem, 5vw, 2rem);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+        
+        .card {
+            background-color: rgb(243, 237, 237);
+            border-radius: 10px;
+            box-shadow: 5 10px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #020202;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .impact-stat {
+            font-size: 2em;
+            font-weight: bold;
+            color: rgb(255, 140, 0);
+            margin: 30px 0;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 1001;
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+        }
+
+        .popup h3 {
+            margin-bottom: 20px;
+            color: var(--green-dark);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--green-medium);
+        }
+
+        .chat-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--green-dark);
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .chat-button:hover {
+            background-color: var(--green-medium);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .container {
+            align-items: center;
+            text-align: center;
+        }
+        .container h2 { 
+            font-size: 40px;
+            font-family: 'Montserrat', sans-serif;
+            color: #2E7D32;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                height: 60vh;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 3em;
+            }
+            
+            .hero p {
+                font-size: 1.5em;
+            }
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero p {
+                font-size: 1.2em;
+            }
+            
+            section {
+                padding: 40px 0;
+            }
+            
+            .impact-stat {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="Prácticas_Ecológicas.html" class="back-button">
+        <span class="arrow">&#8592;</span> Volver a P.E
+    </a>
+    <main>
+        <section id="inicio" class="hero">
+            <div class="hero-content">
+                <h1 class="animate-fadeInUp">Reciclaje: Un Futuro Sostenible</h1>
+                <p class="animate-fadeInUp">"Juntos podemos crear un mundo más limpio y verde"</p>
+            </div>
+        </section>
+
+        <section id="reciclaje101">
+            <div class="container">
+                <h2>Reciclaje</h2>
+                <div class="grid">
+                    <div class="card">
+                        <img src="/reproducción/img1_reciclaje.jpg" alt="Icono de reciclaje">
+                        <h3>¿Qué es el reciclaje?</h3>
+                        <p>El reciclaje es el proceso de convertir residuos en nuevos materiales y objetos.</p>
+                    </div>
+                    <div class="card">
+                        <img src="/reproducción/img2_reciclaje.jpg" alt="Icono de proceso">
+                        <h3>¿Cómo funciona?</h3>
+                        <p>Los materiales se recolectan, clasifican, limpian y procesan en nuevos productos.</p>
+                    </div>
+                    <div class="card">
+                        <img src="/reproducción/img3_reciclaje.jpg" alt="Icono de planeta">
+                        <h3>¿Por qué es importante?</h3>
+                        <p>Reduce la contaminación, ahorra recursos y energía, y protege nuestro planeta.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impacto" class="impacto">
+            <div class="container">
+                <h2>Sabias que</h2>
+                <div class="grid">
+                    <div class="card">
+                        <img src="images/papel.gif" añt="papel"></img>
+                        <div class="impact-stat">1 Tonelada</div>
+                        <p>de papel reciclado salva 17 árboles</p>
+                    </div>
+                    <div class="card">
+                        <img src="images/aluminio.gif" añt="aluminio"></img>
+                        <div class="impact-stat">46% anual</div>
+                        <p>menos emisiones de CO2 al reciclar aluminio</p>
+                    </div>
+                    <div class="card">
+                        <img src="images/degradación.gif" añt="degradación"></img>
+                        <div class="impact-stat">Mil años</div>
+                        <p>tarda una botella de plástico en degradarse</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="proyectos">
+            <div class="container">
+                <h2>Acopio Tecnológico</h2>
+                <div class="gallery">
+                    <div class="card">
+                        <div class="impact-stat">Centros de Acopio Peruano</div>
+                        <a href="https://www.minam.gob.pe/wp-content/uploads/2018/04/CENTROS-DE-ACOPIO-RAEE-EN-EL-PERU-ACTUALIZADO-2018-1.pdf" class="btn">Más información</a>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="/reproducción/img4_reciclaje.jpg" alt="Proyecto de reciclaje 4">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <span class="popup-close" id="popupClose" aria-label="Cerrar">&times;</span>
+        <h3>¿Quieres saber más datos curiosos?</h3>
+        <p>¡Carloncho tiene bastantes datos con respecto al reciclaje y muchos temas más.!</p>
+        <a href="https://www.stack-ai.com/chat-assistant/d1e38f0a-0721-4d63-aa98-f78cd2a62ae0/961b71fa-5ab8-4178-91b3-72aa89ca395e/674405ae53a1023bdafcb1e2" class="chat-button">Chatear con Carloncho</a>
+    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Reciclaje: Un Futuro Sostenible. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script>
+        document.querySelectorAll('.impacto').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+            });
+        });
+
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+        const popupClose = document.getElementById('popupClose');
+        
+        function showPopup() {
+            overlay.style.display = 'block';
+            popup.style.display = 'block';
+        }
+
+        function hidePopup() {
+            overlay.style.display = 'none';
+            popup.style.display = 'none';
+        }
+
+        const faqSection = document.querySelector('.impacto');
+        let popupTimer;
+
+        function startPopupTimer() {
+            popupTimer = setTimeout(showPopup, 8000);
+        }
+
+        function stopPopupTimer() {
+            clearTimeout(popupTimer);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startPopupTimer();
+                } else {
+                    stopPopupTimer();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(faqSection);
+
+        popupClose.addEventListener('click', hidePopup);
+        overlay.addEventListener('click', hidePopup);
+    </script>
+</body>
+</html>
