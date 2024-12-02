@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recicla y Salva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/icon/icon_game.jpg" type="image">
+</head>
+<body>
+    <a href="/index.html" class="back-button">
+        <span class="arrow">&#8592;</span> Volver a Inicio.
+    </a>
+    <div id="overlay" class="overlay"></div>
+    <div id="difficultySelection" class="modal">
+        <h2>Selecciona la Dificultad</h2>
+        <button onclick="startGame('normal')">Normal</button>
+        <button onclick="startGame('dificil')">Difícil</button>
+    </div>
+    <div class="game-wrapper">
+        <div class="game-container">
+            <h1 class="game-title">Salva al señor carpincho</h1>
+            
+            <div class="main-content">
+                <div class="scene">
+                    <img src="images/background/meadow.png" alt="Pradera con colina" class="background">
+                    <img id="hangmanImage" src="images/hangman/stage0.png" alt="Etapa del ahorcado" class="hangman">
+                    <div class="cloud cloud1"></div>
+                    <div class="cloud cloud2"></div>
+                    <div class="sun"></div>
+                    <div class="waste-info">
+                        <p class="score">Puntuación: <span id="scoreValue">0</span></p>
+                        <div class="waste-image-container">
+                            <img id="wasteImage" src="" alt="Residuo actual" class="waste-image">
+                        </div>
+                        <p id="wasteName" class="waste-name"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bins-container" id="binsContainer">
+                <!-- Los botones de los tachos se generarán dinámicamente con JavaScript -->
+            </div>
+        </div>
+        
+        <div id="gameOverMessage" class="game-over hidden">
+            <div class="game-over-content">
+                <p id="gameOverText"></p>
+                <p>Puntuación final: <span id="finalScore"></span></p>
+                <input type="text" id="playerName" placeholder="Ingresa tu nombre" class="player-name-input">
+                <button id="submitScore" class="submit-score-button">Subir Puntuación</button>
+                <button id="playAgainButton" class="play-again-button">Jugar de nuevo</button>
+                <button id="showRankingButton" class="show-ranking-button">Ver Ranking</button>
+            </div>
+        </div>
+
+        <div id="rankingModal" class="ranking-modal hidden">
+            <div class="ranking-content">
+                <h2 id="rankingTitle">Ranking Global</h2>
+                <ol id="rankingList"></ol>
+                <p>Tu posición: <span id="playerRank"></span></p>
+                <button id="closeRankingButton" class="close-ranking-button" onclick="closeRanking()">Cerrar</button>
+                <button id="loadMoreButton" onclick="showRanking(true)">Cargar más</button>
+            </div>
+        </div>   
+    </div>
+
+     <!-- Elementos de audio para efectos de sonido -->
+     <audio id="correctSound" src="images/audios/correcto.mp3" preload="auto"></audio>
+     <audio id="incorrectSound" src="images/audios/incorrecto.mp3" preload="auto"></audio>
+     <audio id="gameOverSound" src="images/audios/game_over.mp3" preload="auto"></audio>
+     <audio id="backgroundMusic" src="images/audios/inicio.mp3" loop preload="auto"></audio>
+     <!-- Botón para controlar el sonido -->
+     <button id="toggleSoundButton" class="sound-toggle-button">🔊</button>
+     <div>
+        <button id="muteButton">Mute</button>
+        <input type="range" id="volumeSlider" min="0" max="100" value="100">
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

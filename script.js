@@ -199,3 +199,69 @@ document.addEventListener('DOMContentLoaded', function() {
     // Añade el evento de clic al botón
     plantarArbolButton.addEventListener('click', plantarArbol);
 });
+
+//FOOTER INTERACTIVO
+
+const teamMembers = [
+            { id: 1, name: "Jelibeth Ramirez Vilchez", role: "Diseñadora de UX/UI", bio: "https://yakuchasqa.github.io/web/" },
+            { id: 2, name: "Ruben Sinche Rojas", role: "Desarrollador Frontend", bio: "Construyendo interfaces eco-amigables con código limpio." },
+            { id: 3, name: "Ximena Chihuan Cárdenas", role: "Analista de Comunicación", bio: "Ayudando en la creación de contenido y en la coordinación de comunicaciones internas y externas." },
+            { id: 4, name: "Karol Balbin Puñez", role: "Genrente de redacción", bio: "Dirigiendo el proyecto y asegurando su éxito." },
+            { id: 5, name: "Andersen Aguilar Enriquez", role: "Asistente de Documentación", bio: "Apoyando en la elaboración y organización de manuales y documentación de proyecto." },
+            { id: 6, name: "Hilari Mishel Zerpa Salazar", role: "Apoyo en Gestión de proyectos", bio: "Colaborando en la planificación y seguimiento de las tareas." },
+            { id: 7, name: "Michael Chancan Alania", role: "Analista de Investigación", bio: "Realizando estudios y recopilando información relevante." }
+        ];
+
+        const teamGrid = document.getElementById('team-grid');
+        const memberDetails = document.getElementById('member-details');
+
+        function createTeamMemberElement(member) {
+            const memberElement = document.createElement('div');
+            memberElement.className = 'team-member';
+            memberElement.innerHTML = `
+                <div class="member-name">${member.name}</div>
+                <div class="member-role">${member.role}</div>
+            `;
+            memberElement.addEventListener('click', () => showMemberDetails(member));
+            return memberElement;
+        }
+
+        function showMemberDetails(member) {
+            memberDetails.innerHTML = `
+                <h3>${member.name}</h3>
+                <p><strong>${member.role}</strong></p>
+                <p>${member.bio}</p>
+                <button class="close-btn">Cerrar</button>
+            `;
+            memberDetails.classList.add('active');
+            memberDetails.querySelector('.close-btn').addEventListener('click', hideMemberDetails);
+        }
+
+        function hideMemberDetails() {
+            memberDetails.classList.remove('active');
+        }
+
+        // Inicializar el footer
+        teamMembers.forEach(member => {
+            teamGrid.appendChild(createTeamMemberElement(member));
+        });
+
+//juego
+document.querySelector('.recycling-game-entry #playButton').addEventListener('click', function(e) {
+    e.preventDefault();
+    // Reemplazar 'URL_DEL_JUEGO' con la URL real del juego
+    window.location.href = 'JueGod/juego.html';
+});
+
+document.querySelector('.recycling-game-entry').addEventListener('mousemove', function(e) {
+    const gameEntry = this.querySelector('.game-entry');
+    const rect = this.getBoundingClientRect();
+    const xAxis = (rect.width / 2 - (e.clientX - rect.left)) / 50;
+    const yAxis = (rect.height / 2 - (e.clientY - rect.top)) / 50;
+    gameEntry.style.transform = `perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+});
+
+document.querySelector('.recycling-game-entry').addEventListener('mouseleave', function() {
+    const gameEntry = this.querySelector('.game-entry');
+    gameEntry.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+});   

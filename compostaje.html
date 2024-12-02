@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guía Avanzada de Compostaje</title>
     <link rel="shortcut icon" href="images/comp_ico.webp" type="image/x-icon">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
          @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
         :root {
@@ -49,6 +50,84 @@
 
         .section {
             padding: 80px 0;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .tree {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            transform-style: preserve-3d;
+            transform: rotateX(-20deg) rotateY(30deg);
+            animation: treeAnimate 5s linear infinite;
+        }
+
+        @keyframes treeAnimate {
+            0% {
+                transform: rotateX(-20deg) rotateY(360deg);
+            }
+            100% {
+                transform: rotateX(-20deg) rotateY(0deg);
+            }
+        }
+
+        .tree div {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: translateY(calc(25px * var(--x))) translateZ(0px);
+        }
+
+        .tree div.branch span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #69c069, #77dd77);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            border-bottom: 5px solid #00000019;
+            transform-origin: bottom;
+            transform: rotateY(calc(90deg * var(--i))) rotateX(30deg) translateZ(28.5px);
+        }
+
+        .tree div.stem span {
+            position: absolute;
+            top: 110px;
+            left: calc(50% - 7.5px);
+            width: 15px;
+            height: 50%;
+            background: linear-gradient(90deg, #bb4622, #df7214);
+            border-bottom: 5px solid #00000019;
+            transform-origin: bottom;
+            transform: rotateY(calc(90deg * var(--i))) translateZ(7.5px);
+        }
+
+        .shadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            filter: blur(20px);
+            transform-style: preserve-3d;
+            transform: rotateX(90deg) translateZ(-65px);
         }
 
         .back-button {
@@ -340,6 +419,41 @@
     </style>
 </head>
 <body>
+    <div id="loader" class="loader">
+        <div class="tree">
+            <div class="branch" style="--x:0">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:1">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:2">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:3">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="stem">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <span class="shadow"></span>
+        </div>
+    </div>
     <a href="Prácticas_Ecológicas.html" class="back-button">
         <span class="arrow">&#8592;</span> Volver a P.E
     </a>
@@ -349,7 +463,7 @@
             <h1>Compostaje</h1>
             <p>Transforma tus residuos orgánicos en tierra rica en nutrientes a través del arte del compostaje</p>
             <div class="compost-bin">
-                <img src="/images/10578899.png" alt="Composting bin with growing plants">
+                <model-viewer src="images/compostaje3d.glb" alt="Modelo 3D" auto-rotate camera-controls background-color="#EFEFEF" style="width: 100%; height: 300px;position: relative;"></model-viewer>
             </div>
         </div>
     </section>
@@ -544,6 +658,14 @@
 
         popupClose.addEventListener('click', hidePopup);
         overlay.addEventListener('click', hidePopup);
+
+
+        window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loader');
+    setTimeout(() => {
+        loadingScreen.style.display = 'none'; // Oculta la pantalla de carga después de 2 segundos
+    }, 2000); // 2000 milisegundos = 2 segundos
+});
     </script>
 </body>
 </html>

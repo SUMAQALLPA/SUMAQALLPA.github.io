@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compras Verdes</title>
     <link rel="shortcut icon" href="images/compr_ico.png" type="image/x-icon">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=B612:ital,wght@0,400;0,700;1,400;1,700&display=swap');
         :root {
             --sage-green: #7C9A92;
             --light-sage: #E8F1EE;
@@ -63,13 +65,93 @@
             font-size: 1.2em;
         }
 
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .tree {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            transform-style: preserve-3d;
+            transform: rotateX(-20deg) rotateY(30deg);
+            animation: treeAnimate 5s linear infinite;
+        }
+
+        @keyframes treeAnimate {
+            0% {
+                transform: rotateX(-20deg) rotateY(360deg);
+            }
+            100% {
+                transform: rotateX(-20deg) rotateY(0deg);
+            }
+        }
+
+        .tree div {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: translateY(calc(25px * var(--x))) translateZ(0px);
+        }
+
+        .tree div.branch span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #69c069, #77dd77);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            border-bottom: 5px solid #00000019;
+            transform-origin: bottom;
+            transform: rotateY(calc(90deg * var(--i))) rotateX(30deg) translateZ(28.5px);
+        }
+
+        .tree div.stem span {
+            position: absolute;
+            top: 110px;
+            left: calc(50% - 7.5px);
+            width: 15px;
+            height: 50%;
+            background: linear-gradient(90deg, #bb4622, #df7214);
+            border-bottom: 5px solid #00000019;
+            transform-origin: bottom;
+            transform: rotateY(calc(90deg * var(--i))) translateZ(7.5px);
+        }
+
+        .shadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            filter: blur(20px);
+            transform-style: preserve-3d;
+            transform: rotateX(90deg) translateZ(-65px);
+        }
+
         /* Header Styles */
         .hero {
             background-color: var(--light-sage);
-            padding: 120px 0;
+            padding: 30px 0;
             text-align: center;
             position: relative;
             overflow: hidden;
+     
+            display: flex;
         }
 
         .hero::before {
@@ -88,22 +170,42 @@
         .hero-content {
             position: relative;
             z-index: 1;
+            max-width: 60%;
+            text-align: center;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 7rem;
             color: var(--dark-sage);
             font-weight: 700;
             margin-bottom: 20px;
-            font-family: 'Montserrat', serif;
+            font-family: 'B612', serif;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 2rem;
             color: var(--sage-green);
             max-width: 600px;
             margin: 0 auto;
+        }
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            width: 100%; /* Ajusta el tamaño para que sea responsivo */
+            height: auto;
+            max-width: 400px; /* Tamaño máximo de la imagen */
+        }
+
+        .hero-image model-viewer {
+            width: 800px;
+            height: 550px;
+            position: relative;
         }
 
         /* Carousel Styles */
@@ -322,28 +424,91 @@
                 font-size: 2rem;
             }
         }
+        @media (max-width: 400px) {
+
+            .hero-image model-viewer {
+                position: fixed;
+                margin: 10px;
+                top: 0;
+                left: 0;
+                width: 70px;
+                height: 70px;
+
+            }
+
+            .hero {
+                padding: 120px 0;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+           .hero p{
+            font-size: 1.2rem;
+           }
+        }
        
     </style>
 </head>
 <body>
+    <div id="loader" class="loader">
+        <div class="tree">
+            <div class="branch" style="--x:0">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:1">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:2">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:3">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="stem">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <span class="shadow"></span>
+        </div>
+    </div>
     <header class="hero">
-        <div class="container hero-content">
+        <div class="hero-content">
             <h1>Compras Verdes</h1>
-            <p>En economiaverde.pe encontrarás varieddad de productos amigables con el medio ambiente (No patrocinado) <br> <br></p>
+            <p>En economiaverde.pe encontrarás varie    dad de productos amigables con el medio ambiente (No patrocinado) <br> <br></p>
             <a href="https://economiaverde.pe/" style="
-    font-size: 20px;
-    color: #2C3E50;
-    text-decoration: none;
-    background-color: #7C9A92;
-    padding: 10px 20px;
-    border-radius: 5px;
-    display: inline-block;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    padding-top: 4px;"
-    onmouseover="this.style.backgroundColor='#5A7668'; this.style.color='#FFFFFF';"
-    onmouseout="this.style.backgroundColor='#7C9A92'; this.style.color='#2C3E50';">
-    Más información
-</a>
+            font-size: 20px;
+            color: #2C3E50;
+            text-decoration: none;
+            background-color: #7C9A92;
+         
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding-top: 4px;"
+            onmouseover="this.style.backgroundColor='#5A7668'; this.style.color='#FFFFFF';"
+            onmouseout="this.style.backgroundColor='#7C9A92'; this.style.color='#2C3E50';">
+            Más información</a>
+        </div>
+        <div class="hero-image">
+            <model-viewer src="images/comprasverdes.glb" alt="Modelo 3D" auto-rotate background-color="#EFEFEF" ></model-viewer>
+        </div>
         
     </header>
     <a href="Prácticas_Ecológicas.html" class="back-button">
@@ -468,6 +633,13 @@
             currentIndex = (currentIndex + 1) % items.length;
             showSlide(currentIndex);
         }, 5000);
+
+        window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loader');
+    setTimeout(() => {
+        loadingScreen.style.display = 'none'; // Oculta la pantalla de carga después de 2 segundos
+    }, 2000); // 2000 milisegundos = 2 segundos
+});
     </script>
 </body>
 </html>

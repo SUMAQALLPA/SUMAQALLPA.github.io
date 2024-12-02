@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REUTILIZAR</title>
     <link rel="shortcut icon" href="images/rec_ico.png" type="image/x-icon">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
         
@@ -36,16 +38,16 @@
         
         /* Hero Section - Asymmetrical Design */
         .hero {
-            min-height: 100vh;
+            min-height: 100vh;;
             padding: 2rem;
             position: relative;
-            overflow: hidden;
             grid-template-columns: 1fr 1fr;
             display: grid;
             align-items: center;
+            overflow: hidden;
             background: linear-gradient(135deg, white 60%, var(--color-sage) 60%);
         }
-        
+
         .hero-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -53,25 +55,34 @@
             position: relative;
             z-index: 2;
         }
-        
+
         .hero h1 {
             font-size: 7.3rem;
             margin-bottom: 2rem;
         }
+
         .hero p {
             font-size: 1.5rem;
         }
-        
+
         .hero-image {
+            flex: 1; /* La imagen ocupará el espacio restante */
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 100%; height: 450px;position: relative;
         }
 
         .hero-image img {
-            max-width: 80%;
+            width: 100%; /* Ajusta el tamaño para que sea responsivo */
             height: auto;
+            max-width: 400px; /* Tamaño máximo de la imagen */
         }
+        .hero-image model-viewer {
+                    width: 100%;
+                    height: 550px;
+                    position: relative;
+                }
         
         .back-button {
             position: fixed;
@@ -99,6 +110,84 @@
         .back-button .arrow {
             margin-right: 10px;
             font-size: 1.2em;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .tree {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            transform-style: preserve-3d;
+            transform: rotateX(-20deg) rotateY(30deg);
+            animation: treeAnimate 5s linear infinite;
+        }
+
+        @keyframes treeAnimate {
+            0% {
+                transform: rotateX(-20deg) rotateY(360deg);
+            }
+            100% {
+                transform: rotateX(-20deg) rotateY(0deg);
+            }
+        }
+
+        .tree div {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: translateY(calc(25px * var(--x))) translateZ(0px);
+        }
+
+        .tree div.branch span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #69c069, #77dd77);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            border-bottom: 5px solid #00000019;
+            transform-origin: bottom;
+            transform: rotateY(calc(90deg * var(--i))) rotateX(30deg) translateZ(28.5px);
+        }
+
+        .tree div.stem span {
+            position: absolute;
+            top: 110px;
+            left: calc(50% - 7.5px);
+            width: 15px;
+            height: 50%;
+            background: linear-gradient(90deg, #bb4622, #df7214);
+            border-bottom: 5px solid #00000019;
+            transform-origin: bottom;
+            transform: rotateY(calc(90deg * var(--i))) translateZ(7.5px);
+        }
+
+        .shadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            filter: blur(20px);
+            transform-style: preserve-3d;
+            transform: rotateX(90deg) translateZ(-65px);
         }
 
         /* Benefits Section - Grid Layout */
@@ -272,6 +361,7 @@
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 3rem;
+              
             }
             
             .benefits-grid {
@@ -280,14 +370,14 @@
 
             .hero-image img {
                 position: fixed;
-                margin: 10px;
+                margin: 2px;
                 top: 0;
                 left: 0;
                 width: 20%;
                 height: 70px;
             }
             .hero {
-                padding: 4.8rem;
+                padding: 2rem;
                 display: flex;
                 text-align: center;
             }
@@ -406,6 +496,17 @@
         }
 
         @media (max-width: 767px) {
+
+            .hero-image model-viewer {
+                position: fixed;
+                margin: 10px;
+                top: 0;
+                left: 0;
+                width: 70px;
+                height: 70px;
+
+            }
+
             footer {
                 padding: 3rem 1rem;
             }
@@ -429,10 +530,46 @@
                 font-size: 0.9rem;
             }
         }
-
+    
+        
     </style>
 </head>
 <body>
+    <div id="loader" class="loader">
+        <div class="tree">
+            <div class="branch" style="--x:0">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:1">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:2">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:3">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="stem">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <span class="shadow"></span>
+        </div>
+    </div>
     <a href="Prácticas_Ecológicas.html" class="back-button">
         <span class="arrow">&#8592;</span> Volver a P.E
     </a>
@@ -442,7 +579,7 @@
             <p>Transformando el presente, construyendo un futuro sostenible</p>
         </div>
         <div class="hero-image">
-            <img src="images/reutilizar11.png" alt="Vehículo ecológico">
+            <model-viewer src="images/reutilizar.glb" alt="Modelo 3D" auto-rotate camera-controls background-color="#EFEFEF"></model-viewer>
         </div>
     </section>
 
@@ -630,6 +767,14 @@
     
         popupClose.addEventListener('click', hidePopup);
         overlay.addEventListener('click', hidePopup);
+
+
+        window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loader');
+    setTimeout(() => {
+        loadingScreen.style.display = 'none'; // Oculta la pantalla de carga después de 2 segundos
+    }, 2000); // 2000 milisegundos = 2 segundos
+});
     </script>
 </body>
 </html>

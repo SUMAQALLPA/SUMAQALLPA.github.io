@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reciclaje: Un Futuro Sostenible</title>
     <link rel="shortcut icon" href="images/rec_ico.png" type="image/x-icon">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
         :root {
@@ -26,6 +27,20 @@
             background-color: var(--background-color);
             color: var(--text-color);
             scroll-behavior: smooth;
+        }
+        
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; /* Asegúrate de que esté por encima de otros elementos */
         }
         
         .back-button {
@@ -74,19 +89,40 @@
             z-index: 1000;
             transition: background-color 0.3s ease;
         }
+    
         
         .hero {
             height: 75vh;
-            display: grid;
+            display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             text-align: center;
             background-image: url('/reproducción/reciclaje1.jpg');
             background-size: cover;
             background-position: center;
             position: relative;
+            margin-bottom: 6rem;
         }
         
+        .hero-content {
+            max-width: 50%;
+            z-index: 99;
+        }
+        
+        .hero h1 {
+            font-size: 6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            color: #ffffff;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(rgb(255, 255, 255));
+            max-width: 600px;
+        }
+
         .hero::before {
             content: '';
             position: absolute;
@@ -96,23 +132,105 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.5);
         }
-        
-        .hero-content {
+    
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .tree {
             position: relative;
-            color: white;
-            padding: 20px;
+            width: 50px;
+            height: 50px;
+            transform-style: preserve-3d;
+            transform: rotateX(-20deg) rotateY(30deg);
+            animation: treeAnimate 5s linear infinite;
         }
+
+        @keyframes treeAnimate {
+            0% {
+                transform: rotateX(-20deg) rotateY(360deg);
+            }
+            100% {
+                transform: rotateX(-20deg) rotateY(0deg);
+            }
+        }
+
+        .tree div {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: translateY(calc(25px * var(--x))) translateZ(0px);
+        }
+
+        .tree div.branch span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #69c069, #77dd77);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            border-bottom: 5px solid #00000019;
+            transform-origin: bottom;
+            transform: rotateY(calc(90deg * var(--i))) rotateX(30deg) translateZ(28.5px);
+        }
+
+        .tree div.stem span {
+            position: absolute;
+            top: 110px;
+            left: calc(50% - 7.5px);
+            width: 15px;
+            height: 50%;
+            background: linear-gradient(90deg, #bb4622, #df7214);
+            border-bottom: 5px solid #00000019;
+            transform-origin: bottom;
+            transform: rotateY(calc(90deg * var(--i))) translateZ(7.5px);
+        }
+
+        .shadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            filter: blur(20px);
+            transform-style: preserve-3d;
+            transform: rotateX(90deg) translateZ(-65px);
+        }
+
+
         
-        .hero h1 {
-            font-size: 5em;
-            margin-bottom: 20px;
-            line-height: 1.2;
+        .hero-image {
+            flex: 1; /* La imagen ocupará el espacio restante */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 50%; /* Limita el ancho de la imagen */
         }
-        .hero p { 
-            font-size: 35px;
-            margin-bottom: 20px;
-            font-family: 'Montserrat', sans-serif;
+
+        .hero-image img {
+            width: 100%; /* Ajusta el tamaño para que sea responsivo */
+            height: auto;
+            max-width: 400px; /* Tamaño máximo de la imagen */
         }
+
+        .hero-image model-viewer {
+            width: 100%; height: 450px;position: relative;
+        }
+
         .btn {
             display: inline-block;
             padding: 10px 20px;
@@ -274,7 +392,56 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        
+        .eco-section {
+            background-color: #f0f8f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+    
+        .image-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .eco-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            
+        }
+        .eco-image:hover, .eco-image.active {
+            transform: scale(1.1);
+            border: 3px solid #2c7744;
+        }
+        .image-info {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e0f0e0;
+            border-radius: 5px;
+        }
+        .eco-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #2c7744;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        .eco-button:hover {
+            background-color: #1f5c31;
+        }
+       
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -319,6 +486,22 @@
         }
 
         @media (max-width: 480px) {
+            .hero {
+                flex-direction: column;
+                height: auto; /* Ajustar la altura para que se adapte al contenido */
+            }
+            
+            .hero-image {
+                max-width: 100%; /* Asegurarse de que la imagen ocupe el 100% del ancho */
+                margin-top: 20px; /* Espaciado entre el texto y la imagen */
+            }
+
+            .hero-image model-viewer {
+                width: 400px;
+                height: 200px;
+                position: relative;
+            }
+        
             .hero h1 {
                 font-size: 2.5em;
             }
@@ -334,10 +517,47 @@
             .impact-stat {
                 font-size: 1.5em;
             }
+            
         }
+
     </style>
 </head>
 <body>
+    <div id="loader" class="loader">
+        <div class="tree">
+            <div class="branch" style="--x:0">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:1">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:2">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="branch" style="--x:3">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <div class="stem">
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+            <span class="shadow"></span>
+        </div>
+    </div>
     <a href="Prácticas_Ecológicas.html" class="back-button">
         <span class="arrow">&#8592;</span> Volver a P.E
     </a>
@@ -346,6 +566,9 @@
             <div class="hero-content">
                 <h1 class="animate-fadeInUp">Reciclaje: Un Futuro Sostenible</h1>
                 <p class="animate-fadeInUp">"Juntos podemos crear un mundo más limpio y verde"</p>
+            </div>
+            <div class="hero-image">
+                <model-viewer src="images/reciclaje.glb" alt="Modelo 3D" auto-rotate camera-controls background-color="#EFEFEF"></model-viewer>
             </div>
         </section>
 
@@ -394,6 +617,22 @@
                 </div>
             </div>
         </section>
+
+        <section id="noticias">
+            <div class="eco-section">
+                <h1>Conciencia Ambiental</h1>
+                <div class="image-container">
+                    <img class="eco-image" src="images/PDF.gif" data-info="Ingresa al PDF para aprender sobre reciclaje y pobreza.¡No te lo pierdas!🌱" data-button="Más información" data-link="https://www.minam.gob.pe/gestion-de-residuos-solidos/wp-content/uploads/sites/136/2017/12/Brochure-PEI_-Iniciativa-de-probreza-y-medio-ambiente-Gesti%C3%B3n-Integral-de-RRSS-D.-Sostenible-e-inclusivo.compressed.pdf" />
+                    <img class="eco-image" src="images/VIDEO.gif" data-info="¡Descubre los secretos del reciclaje! ♻️ Dale al play y ¡no te lo pierdas!" data-button="Ver video" data-link="https://youtu.be/2K2CtYA62eo?si=9PXL4LO7Xw7pUy_b" />
+    
+                    <div class="image-info" id="imageInfo" style="display: none;">
+                        <p id="infoText"></p>
+                        <button id="infoButton" class="eco-button" style="display: none;"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="proyectos">
             <div class="container">
                 <h2>Acopio Tecnológico</h2>
@@ -421,6 +660,9 @@
             <p>&copy; 2024 Reciclaje: Un Futuro Sostenible. Todos los derechos reservados.</p>
         </div>
     </footer>
+
+
+
     <script>
         document.querySelectorAll('.impacto').forEach(question => {
             question.addEventListener('click', () => {
@@ -468,6 +710,44 @@
 
         popupClose.addEventListener('click', hidePopup);
         overlay.addEventListener('click', hidePopup);
+
+
+
+        const images = document.querySelectorAll('.eco-image');
+    const imageInfo = document.getElementById('imageInfo');
+    const infoText = document.getElementById('infoText');
+    const infoButton = document.getElementById('infoButton');
+
+    images.forEach(img => {
+        img.addEventListener('click', () => {
+            // Remover la clase "active" de todas las imágenes
+            images.forEach(i => i.classList.remove('active'));
+            // Añadir la clase "active" solo a la imagen clickeada
+            img.classList.add('active');
+
+            // Mostrar el cuadro de información y actualizar el texto
+            const info = img.getAttribute('data-info');
+            const buttonText = img.getAttribute('data-button');
+            const link = img.getAttribute('data-link');
+
+            infoText.textContent = info;
+            infoButton.textContent = buttonText;
+            infoButton.style.display = 'inline-block'; // Mostrar el botón
+            imageInfo.style.display = 'block';
+
+            // Asociar el enlace al botón
+            infoButton.onclick = () => {
+                window.location.href = link;
+            };
+        });
+    });
+    window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loader');
+    setTimeout(() => {
+        loadingScreen.style.display = 'none'; // Oculta la pantalla de carga después de 2 segundos
+    }, 2000); // 2000 milisegundos = 2 segundos
+});
+
     </script>
 </body>
 </html>
