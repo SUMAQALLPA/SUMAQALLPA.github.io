@@ -30,6 +30,8 @@
             <a href="Prácticas_Ecológicas.html">Prácticas Ecológicas</a>
             <a href="Biohuertos.html">Biohuertos</a>
             <a href="SobreNosotros.html">Sobre Nosotros</a>
+            <a href="Calculadora/huella_ecológica.html">Calcula tu huella ecológica</a>
+            <a href="Mapa/mapas4.html">Ubicación de tachos UNCP</a>
             <a href="https://www.stack-ai.com/chat-assistant/d1e38f0a-0721-4d63-aa98-f78cd2a62ae0/961b71fa-5ab8-4178-91b3-72aa89ca395e/674405ae53a1023bdafcb1e2">Chatbot</a>
         </div>
         <div id="main">
@@ -364,10 +366,125 @@
         </svg>
       </button>
 
-    
+      <section class="eco-comment-section">
+        <div class="eco-icon">🌿</div>
+        <h2>Comparte tu opinión con nosotros.</h2>
+        <h4>Si tienes alguna sugerencia o comentario, no dudes en hacérmelos saber.</h4>
+        <form id="commentForm">
+            <div class="input-group">
+                <label for="playerName">Nombre:</label>
+                <input type="text" id="playerName" placeholder="Ingresa tu nombre" required>
+            </div>
+            <div class="input-group">
+                <label for="playerEmail">Correo electrónico:</label>
+                <input type="email" id="playerEmail" placeholder="Ingresa tu correo electrónico" required>
+            </div>
+            <div class="input-group">
+                <label for="playerComment">Comentario:</label>
+                <textarea id="playerComment" placeholder="Ingresa tu comentario" rows="4" required></textarea>
+            </div>
+            <button type="submit" id="submitScore">Enviar Comentario</button>
+        </form>
+        <div id="errorMessage"></div>
+    </section>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUVZ9pWJkD-bLkF3C-QVJGTjWRvXAgeFs",
+            authDomain: "consultas-carpincheras.firebaseapp.com",
+            projectId: "consultas-carpincheras",
+            storageBucket: "consultas-carpincheras.firebasestorage.app",
+            messagingSenderId: "599722346434",
+            appId: "1:599722346434:web:3533e537db8a2a5413f85b",
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Elementos del DOM
+        const form = document.getElementById('commentForm');
+        const submitButton = document.getElementById('submitScore');
+        const nameInput = document.getElementById('playerName');
+        const emailInput = document.getElementById('playerEmail');
+        const commentInput = document.getElementById('playerComment');
+        const errorMessageDiv = document.getElementById('errorMessage');
+
+        // Función para validar el formulario
+        function validateForm() {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return nameInput.value.trim() !== '' && 
+                   emailInput.value.trim() !== '' && 
+                   commentInput.value.trim() !== '' && 
+                   emailPattern.test(emailInput.value.trim());
+        }
+
+        // Función para mostrar mensajes de error
+        function showError(message) {
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.classList.add('shake');
+            setTimeout(() => {
+                errorMessageDiv.classList.remove('shake');
+            }, 500);
+        }
+
+        // Función para limpiar mensajes de error
+        function clearError() {
+            errorMessageDiv.textContent = '';
+        }
+
+        // Función para manejar el envío del formulario
+        async function handleSubmit(e) {
+            e.preventDefault();
+            clearError();
+            if (!validateForm()) {
+                showError('Por favor, completa todos los campos y verifica el formato del correo electrónico.');
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+
+            try {
+                // Crear un nuevo documento en la colección 'comentarios'
+                await addDoc(collection(db, 'comentarios'), {
+                    nombre: nameInput.value.trim(),
+                    email: emailInput.value.trim(),
+                    contenido: commentInput.value.trim(),
+                    fecha: serverTimestamp()
+                });
+
+                alert('Comentario enviado con éxito!');
+                form.reset();
+            } catch (error) {
+                console.error('Error al enviar el comentario:', error);
+                showError('Hubo un problema al enviar tu comentario. Por favor, intenta de nuevo.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Enviar Comentario';
+            }
+        }
+
+        // Agregar evento al formulario
+        form.addEventListener('submit', handleSubmit);
+
+        // Verificar la conexión con Firebase
+        db.collection('comentarios').limit(1).get()
+            .then(() => {
+                console.log('Conexión con Firebase establecida correctamente');
+            })
+            .catch((error) => {
+                console.error('Error al conectar con Firebase:', error);
+                showError('No se pudo establecer conexión con la base de datos. Por favor, verifica tu conexión a internet.');
+            });
+    </script>
     <main>
         <!-- Contenido principal de la página aquí -->
     </main>
+
     <footer class="eco-footer">
         <div class="footer-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

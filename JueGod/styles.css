@@ -469,6 +469,9 @@ body, html {
 }
 
 @media (max-width: 480px) {
+    .game-wrapper{
+         height: 150vh;
+    }
     .game-container {
         padding: 10px;
     }
@@ -526,7 +529,7 @@ body, html {
     }
 
     .game-title {
-        font-size: 1.2em;
+        font-size: 1.6rem;
         margin-bottom: 5px;
     }
 
@@ -539,18 +542,44 @@ body, html {
     }
 
     .waste-image-container {
-        width: 50px;
-        height: 50px;
+        width: 80px;
+        height: 80px
     }
 
     .bin-button {
         flex-basis: calc(50% - 5px);
         margin-bottom: 5px;
     }
+    .bin-button img {
+        width: 95px;
+        height: 95px;
+    }
+    .bin-button span {
+        font-size: 17px;
+    }
     .main-content {
         height: 15%;
         flex-grow: 0;
         margin-bottom: 40px;
+    }
+    .waste-name {
+        font-size: 20px;
+    }
+    .waste-image img {
+        width: 60px;
+        height: 60px;
+    }
+    #volumeSlider {
+        display: none;
+    }
+    .back-button {
+        width: 80px;
+        height: 20px;   
+        background-color: #90EE90; 
+        right: 2px;
+    }
+    .back-button .arrow {
+        font-size: 10px;
     }
 }
 /*audio*/

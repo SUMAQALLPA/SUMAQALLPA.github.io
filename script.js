@@ -204,9 +204,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const teamMembers = [
             { id: 1, name: "Jelibeth Ramirez Vilchez", role: "Diseñadora de UX/UI", bio: "https://yakuchasqa.github.io/web/" },
-            { id: 2, name: "Ruben Sinche Rojas", role: "Desarrollador Frontend", bio: "Construyendo interfaces eco-amigables con código limpio." },
+            { id: 2, name: "Ruben Sinche Rojas", role: "Desarrollador Frontend", bio: "Construyendo interfaces eco-amigables." },
             { id: 3, name: "Ximena Chihuan Cárdenas", role: "Analista de Comunicación", bio: "Ayudando en la creación de contenido y en la coordinación de comunicaciones internas y externas." },
-            { id: 4, name: "Karol Balbin Puñez", role: "Genrente de redacción", bio: "Dirigiendo el proyecto y asegurando su éxito." },
+            { id: 4, name: "Karol Balbin Puñez", role: "Gerente de redacción", bio: "Dirigiendo el proyecto y asegurando su éxito." },
             { id: 5, name: "Andersen Aguilar Enriquez", role: "Asistente de Documentación", bio: "Apoyando en la elaboración y organización de manuales y documentación de proyecto." },
             { id: 6, name: "Hilari Mishel Zerpa Salazar", role: "Apoyo en Gestión de proyectos", bio: "Colaborando en la planificación y seguimiento de las tareas." },
             { id: 7, name: "Michael Chancan Alania", role: "Analista de Investigación", bio: "Realizando estudios y recopilando información relevante." }
