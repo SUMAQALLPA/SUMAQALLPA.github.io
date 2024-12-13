@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Tachos de Basura - UNCP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
+    <style>
+        :root {
+            --primary-color: #1e8449;
+            --secondary-color: #2ecc71;
+            --background-color: rgba(232, 245, 233, 0.8);
+            --text-color: #333;
+            --card-background: #ffffff;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-image: url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: var(--green-medium);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .back-button:hover {
+            background-color: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .back-button .arrow {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInDown 1s ease-out;
+            background-color: rgba(30, 132, 73, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .description {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: rgba(0,0,0,0.6);
+            padding: 15px;
+            border-radius: 8px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .map-container {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        #mapa {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        #mapa:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .eco-tips {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-out 1.5s both;
+        }
+
+        .eco-tips h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .eco-tips ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .eco-tips li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .eco-tips li:before {
+            content: "\f06c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            #mapa {
+                height: 400px;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/index.html" class="back-button">
+        <span class="arrow">&#8592;</span> Volver a Inicio.
+    </a>
+    <main class="container">
+        <h1>Mapa de Tachos de Basura - UNCP</h1>
+        <p class="description">Ayúdanos a mantener limpia nuestra universidad. Utiliza los tachos de basura ubicados en los siguientes puntos:</p>
+        <div class="map-container">
+            <iframe id="mapa" src="https://www.google.com/maps/d/u/2/embed?mid=1qcTrkIWhCv9ccfkoft0TiHBkhZcTf1U&ehbc=2E312F&noprof=1" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="eco-tips">
+            <h2>Consejos Ecológicos</h2>
+            <ul>
+                <li>Reduce el uso de plásticos de un solo uso.</li>
+                <li>Separa tus residuos para facilitar el reciclaje.</li>
+                <li>Lleva tu propia botella de agua reutilizable.</li>
+                <li>Utiliza bolsas de tela para tus compras.</li>
+                <li>Apaga las luces y desconecta los aparatos cuando no los uses.</li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

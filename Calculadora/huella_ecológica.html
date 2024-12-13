@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Huella Ecológica Avanzada</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --background-color: rgba(255, 255, 255, 0.9);
+            --text-color: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: url('https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--background-color);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .question {
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .question.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .option {
+            background-color: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .option:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        #result {
+            text-align: center;
+        }
+
+        #eco-score {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            color: var(--primary-color);
+        }
+
+        #tree-container {
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        #tree-trunk {
+            width: 40px;
+            height: 100px;
+            background-color: #8B4513;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #tree-leaves {
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 150px solid #2ecc71;
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.5s ease;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin: 2rem 0;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 0;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora de Huella Ecológica</h1>
+            <p>Descubre tu impacto en el medio ambiente</p>
+        </header>
+        <div class="content">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div id="quiz">
+                <div class="question" id="question"></div>
+                <div class="options" id="options"></div>
+            </div>
+            <div id="result" style="display: none;">
+                <h2>Tu Huella Ecológica</h2>
+                <div id="tree-container">
+                    <div id="tree-trunk"></div>
+                    <div id="tree-leaves"></div>
+                </div>
+                <div id="eco-score"></div>
+                <p id="score-description"></p>
+                <div class="chart-container">
+                    <canvas id="impact-chart"></canvas>
+                </div>
+                <button onclick="resetQuiz()">Calcular de nuevo</button>
+                <button onclick="window.location.href='/index.html'">Volver a inicio</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const questions = [
+            {
+                text: "¿Con qué frecuencia utilizas transporte público?",
+                options: [
+                    { text: "Todos los días", value: 1, impact: { transport: 1, energy: 0, food: 0, waste: 0 } },
+                    { text: "Algunas veces por semana", value: 2, impact: { transport: 2, energy: 0, food: 0, waste: 0 } },
+                    { text: "Raramente", value: 3, impact: { transport: 3, energy: 0, food: 0, waste: 0 } },
+                    { text: "Nunca", value: 4, impact: { transport: 4, energy: 0, food: 0, waste: 0 } }
+                ]
+            },
+            {
+                text: "¿Cuántas horas al día usas aire acondicionado o calefacción?",
+                options: [
+                    { text: "No uso", value: 1, impact: { transport: 0, energy: 1, food: 0, waste: 0 } },
+                    { text: "1-3 horas", value: 2, impact: { transport: 0, energy: 2, food: 0, waste: 0 } },
+                    { text: "4-8 horas", value: 3, impact: { transport: 0, energy: 3, food: 0, waste: 0 } },
+                    { text: "Todo el día", value: 4, impact: { transport: 0, energy: 4, food: 0, waste: 0 } }
+                ]
+            },
+            {
+                text: "¿Con qué frecuencia consumes productos locales?",
+                options: [
+                    { text: "Siempre que es posible", value: 1, impact: { transport: 0, energy: 0, food: 1, waste: 0 } },
+                    { text: "Frecuentemente", value: 2, impact: { transport: 0, energy: 0, food: 2, waste: 0 } },
+                    { text: "Ocasionalmente", value: 3, impact: { transport: 0, energy: 0, food: 3, waste: 0 } },
+                    { text: "Raramente", value: 4, impact: { transport: 0, energy: 0, food: 4, waste: 0 } }
+                ]
+            },
+            {
+                text: "¿Cuántas veces a la semana comes carne?",
+                options: [
+                    { text: "Nunca (vegetariano/vegano)", value: 1, impact: { transport: 0, energy: 0, food: 1, waste: 0 } },
+                    { text: "1-2 veces", value: 2, impact: { transport: 0, energy: 0, food: 2, waste: 0 } },
+                    { text: "3-5 veces", value: 3, impact: { transport: 0, energy: 0, food: 3, waste: 0 } },
+                    { text: "Todos los días", value: 4, impact: { transport: 0, energy: 0, food: 4, waste: 0 } }
+                ]
+            },
+            {
+                text: "¿Cómo manejas tus residuos?",
+                options: [
+                    { text: "Reciclo y composto todo lo posible", value: 1, impact: { transport: 0, energy: 0, food: 0, waste: 1 } },
+                    { text: "Reciclo la mayoría de mis residuos", value: 2, impact: { transport: 0, energy: 0, food: 0, waste: 2 } },
+                    { text: "Reciclo algunos residuos", value: 3, impact: { transport: 0, energy: 0, food: 0, waste: 3 } },
+                    { text: "No reciclo", value: 4, impact: { transport: 0, energy: 0, food: 0, waste: 4 } }
+                ]
+            },
+            {
+                text: "¿Qué tipo de energía usas en casa?",
+                options: [
+                    { text: "Energía renovable (solar/eólica)", value: 1, impact: { transport: 0, energy: 1, food: 0, waste: 0 } },
+                    { text: "Energía mixta", value: 2, impact: { transport: 0, energy: 2, food: 0, waste: 0 } },
+                    { text: "Electricidad convencional", value: 3, impact: { transport: 0, energy: 3, food: 0, waste: 0 } },
+                    { text: "Energía fósil (carbón/gas)", value: 4, impact: { transport: 0, energy: 4, food: 0, waste: 0 } }
+                ]
+            },
+            {
+                text: "¿Con qué frecuencia compras productos plásticos de un solo uso?",
+                options: [
+                    { text: "Nunca", value: 1, impact: { transport: 0, energy: 0, food: 0, waste: 1 } },
+                    { text: "Raramente", value: 2, impact: { transport: 0, energy: 0, food: 0, waste: 2 } },
+                    { text: "A veces", value: 3, impact: { transport: 0, energy: 0, food: 0, waste: 3 } },
+                    { text: "Frecuentemente", value: 4, impact: { transport: 0, energy: 0, food: 0, waste: 4 } }
+                ]
+            },
+            {
+                text: "¿Qué medio de transporte usas habitualmente para ir al trabajo o escuela?",
+                options: [
+                    { text: "Bicicleta o a pie", value: 1, impact: { transport: 1, energy: 0, food: 0, waste: 0 } },
+                    { text: "Transporte público", value: 2, impact: { transport: 2, energy: 0, food: 0, waste: 0 } },
+                    { text: "Colectivos", value: 3, impact: { transport: 3, energy: 0, food: 0, waste: 0 } },
+                    { text: "Vehículo personal", value: 4, impact: { transport: 4, energy: 0, food: 0, waste: 0 } }
+                ]
+            },
+            {
+                text: "¿Cuánta agua utilizas en casa diariamente?",
+                options: [
+                    { text: "Menos de 50 litros", value: 1, impact: { transport: 0, energy: 0, food: 0, waste: 1 } },
+                    { text: "50-100 litros", value: 2, impact: { transport: 0, energy: 0, food: 0, waste: 2 } },
+                    { text: "100-200 litros", value: 3, impact: { transport: 0, energy: 0, food: 0, waste: 3 } },
+                    { text: "Más de 200 litros", value: 4, impact: { transport: 0, energy: 0, food: 0, waste: 4 } }
+                ]
+            }
+
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let impacts = { transport: 0, energy: 0, food: 0, waste: 0 };
+
+        function displayQuestion() {
+            const questionEl = document.getElementById('question');
+            const optionsEl = document.getElementById('options');
+            const question = questions[currentQuestion];
+
+            questionEl.innerHTML = `<h2>${question.text}</h2>`;
+            optionsEl.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const button = document.createElement('div');
+                button.className = 'option';
+                button.textContent = option.text;
+                button.onclick = () => selectAnswer(index);
+                optionsEl.appendChild(button);
+            });
+
+            updateProgressBar();
+            
+            // Add animation
+            questionEl.classList.remove('active');
+            setTimeout(() => {
+                questionEl.classList.add('active');
+            }, 50);
+        }
+
+        function selectAnswer(index) {
+            const selectedOption = questions[currentQuestion].options[index];
+            score += selectedOption.value;
+
+            for (const category in selectedOption.impact) {
+                impacts[category] += selectedOption.impact[category];
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                displayQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function updateProgressBar() {
+            const progress = document.getElementById('progress');
+            const percentage = ((currentQuestion + 1) / questions.length) * 100;
+            progress.style.width = `${percentage}%`;
+        }
+
+        function showResult() {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+
+            const treeLeaves = document.getElementById('tree-leaves');
+            const ecoScore = document.getElementById('eco-score');
+            const scoreDescription = document.getElementById('score-description');
+
+            const maxScore = questions.length * 4;
+            const percentage = (score / maxScore) * 100;
+
+            ecoScore.textContent = `${Math.round(percentage)}%`;
+
+            if (percentage <= 25) {
+                treeLeaves.style.borderBottomColor = '#2ecc71';
+                treeLeaves.style.transform = 'translateX(-50%) scale(1.2)';
+                scoreDescription.textContent = '¡Excelente! Tu huella ecológica es muy baja. Sigue así y anima a otros a seguir tu ejemplo.';
+            } else if (percentage <= 50) {
+                treeLeaves.style.borderBottomColor = '#f1c40f';
+                treeLeaves.style.transform = 'translateX(-50%) scale(1)';
+                scoreDescription.textContent = 'Bien. Tu huella ecológica es moderada. Hay algunas áreas donde podrías mejorar para reducir tu impacto.';
+            } else if (percentage <= 75) {
+                treeLeaves.style.borderBottomColor = '#e67e22';
+                treeLeaves.style.transform = 'translateX(-50%) scale(0.8)';
+                scoreDescription.textContent = 'Tu huella ecológica es considerable. Considera hacer cambios en tu estilo de vida para reducir tu impacto ambiental.';
+            } else {
+                treeLeaves.style.borderBottomColor = '#e74c3c';
+                treeLeaves.style.transform = 'translateX(-50%) scale(0.6)';
+                scoreDescription.textContent = 'Tu huella ecológica es alta. Es importante que tomes medidas para reducir significativamente tu impacto en el medio ambiente.';
+            }
+
+            createImpactChart();
+        }
+
+        function createImpactChart() {
+            const ctx = document.getElementById('impact-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Transporte', 'Energía', 'Alimentación', 'Residuos'],
+                    datasets: [{
+                        label: 'Tu impacto',
+                        data: [impacts.transport, impacts.energy, impacts.food, impacts.waste],
+                        backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                        borderColor: 'rgba(46, 204, 113, 1)',
+                        pointBackgroundColor: 'rgba(46, 204, 113, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(46, 204, 113, 1)'
+                    }]
+                },
+                options: {
+                    scale: {
+                        ticks: {
+                            beginAtZero: true,
+                            max: 16,
+                            stepSize: 4
+                        }
+                    }
+                }
+            });
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            impacts = { transport: 0, energy: 0, food: 0, waste: 0 };
+            document.getElementById('quiz').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            displayQuestion();
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>
